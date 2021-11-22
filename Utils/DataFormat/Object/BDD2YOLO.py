@@ -154,11 +154,11 @@ def get_bdd_categorys_from_file(bdd100k_file_path):
 
 if __name__ == "__main__":
     parser = argparse.ArgumentParser(description="Change bdd100k dataset format to yolo dataset format!", epilog="Hello! AI dataset! Hummmm....")
-    parser.add_argument('--label_path', '-p', type=str, required=True, help='BDD dataset label path', metavar='bdd_lable_path')
-    # parser.add_argument('--label_path', '-p', type=str, default=r'./',help='BDD dataset label path', metavar='bdd_lable_path') # 便于在IDE中运行
-    parser.add_argument('--output_label_path', '-ol', type=str, default='./yolo_format', help='YOLO format label output path', metavar='output_label_path')
-    parser.add_argument('--output_class_path', '-oc', type=str, default='./', help='YOLO format label class output path', metavar='output_class_path')
-    parser.add_argument('--names_file','-n', type=str, default='./bdd100k.names', help='BDD100K names file', metavar='bdd100k.names')
+    parser.add_argument('-p', '--label_path', type=str, required=True, help='BDD dataset label path', metavar='bdd_lable_path')
+    # parser.add_argument('-p', '--label_path',  type=str, default=r'./',help='BDD dataset label path', metavar='bdd_lable_path') # 便于在IDE中运行
+    parser.add_argument('-ol', '--output_label_path', type=str, default='./yolo_format', help='YOLO format label output path', metavar='output_label_path')
+    parser.add_argument('-oc', '--output_class_path', type=str, default='./', help='YOLO format label class output path', metavar='output_class_path')
+    parser.add_argument('-n', '--names_file', type=str, default='./bdd100k.names', help='BDD100K names file', metavar='bdd100k.names')
     opt = parser.parse_args()
 
     if not os.path.isdir(opt.label_path):

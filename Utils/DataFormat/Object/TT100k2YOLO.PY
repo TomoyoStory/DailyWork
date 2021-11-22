@@ -184,12 +184,12 @@ if __name__ == "__main__":
     # parser.add_argument('-c', '--crop_multiclass', action='store_true', default=True,  help='only crop traffic sign for classfy, TT100k output multiclass') # 为了方便IDE
     opt = parser.parse_args()
 
-    if not os.path.exists(opt.p):
-        raise Exception('%s file do not exists:' % opt.p)
+    if not os.path.exists(opt.annotations_path):
+        raise Exception('%s file do not exists:' % opt.annotations_path)
     
-    if opt.c:
+    if opt.crop_multiclass:
         logging.info('tt100k dataset is classified to multiclass!')
-        tt100k_to_crop_multiclass(opt.p, opt.o)
+        tt100k_to_crop_multiclass(opt.annotations_path, opt.output_label_path)
     else:
-        logging.info('tt100k dataset is classified to single class with a index : %d' % opt.s )
-        tt100k_to_yolo_single(opt.p, opt.o, opt.s)
+        logging.info('tt100k dataset is classified to single class with a index : %d' % opt.single_index )
+        tt100k_to_yolo_single(opt.annotations_path, opt.output_label_path, opt.single_index)

@@ -2,10 +2,11 @@
 
 import os
 import argparse
+from tqdm import tqdm
 from pathlib import Path
 import xml.etree.ElementTree as ET
 
-CLASSES = ["person","car"] #! 根据数据标注情况选取实际的需要的类别
+CLASSES = ["persoon","car"] #! 根据数据标注情况选取实际的需要的类别
 
 def xyxy2xywh(size, box):
     '''
@@ -41,7 +42,7 @@ def voc2yolo(input_path, output_path, width=None, height=None, save_difficult=Fa
     Returns:
         None
     '''
-    for file in os.listdir(input_path):
+    for file in tqdm(os.listdir(input_path), desc='Changing VOC format to YOLO format!'):
         label_file = input_path + os.sep + file
         if os.path.isfile(label_file) and Path(label_file).suffix.lower()[1:] == 'xml': # 指定仅读取xml
             with open(output_path + os.sep + file.replace('xml', 'txt'), 'w') as out_file:
@@ -85,5 +86,5 @@ if __name__ == '__main__':
     
     opt = parser.parse_args()
 
-    os.makedirs(opt.o, exist_ok=True)
-    voc2yolo(opt.i, opt.o, opt.W, opt.H)
+    os.makedirs(opt.output_path, exist_ok=True)
+    voc2yolo(opt.input_path, opt.output_path, opt.width, opt.height)
