@@ -23,7 +23,7 @@ def cluster_yolo2anchor(label_path, width, height, output_anchor_file='./yolo_an
     bbox = np.array(bbox, dtype=np.float32)
     weight = np.array([width, height], dtype=np.float32)
     bbox = bbox * weight
-    kmeans = KMeans(init=cluster_init, n_clusters=cluster_number, n_init=5, random_state=0)
+    kmeans = KMeans(init=cluster_init, n_clusters=cluster_number, n_init=5, random_state=0, max_iter=1000) # 最大KMeans迭代次数
     logging.info('Clustering...')
     kmeans.fit(bbox)
     centroids = kmeans.cluster_centers_
