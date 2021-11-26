@@ -1,4 +1,4 @@
-# VOC的xml格式转换为YOLO的xywh格式(2021-11-19 11:25:23 修正)
+# VOC的xml格式转换为YOLO的xywh格式
 
 import os
 import argparse

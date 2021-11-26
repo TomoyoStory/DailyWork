@@ -1,4 +1,4 @@
-# BDD数据集格式转换为YOLO的xywh格式(2021-11-19 11:17:06 修正)
+# BDD数据集格式转换为YOLO的xywh格式
 
 import os
 import json
