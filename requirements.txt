@@ -1,0 +1,7 @@
+# pip install -i https://mirrors.aliyun.com/pypi/simple/ -r 
+
+# Base ----------------------------------------
+tqdm
+numpy
+Pillow
+sklearn
