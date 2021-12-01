@@ -3,5 +3,6 @@
 # Base ----------------------------------------
 tqdm
 numpy
+imgaug
 Pillow
 sklearn
