@@ -86,32 +86,32 @@ SEMANTICS_DICT = {
     'vehicle_ridery-area':{                 'id':7,        'train_id':3,       'type_id':2  },  #  骑行车（有人）
     'vehicle_else-area':{                   'id':8,        'train_id':2,       'type_id':2  },  #  异形车辆
     'pedestrian_general-area':{             'id':9,        'train_id':4,       'type_id':3  },  #  普通行人
-    'pedestrian_else-area':{                'id':10,       'train_id':3,       'type_id':3  },  #  异形人
+    'pedestrian_else-area':{                'id':10,       'train_id':4,       'type_id':3  },  #  异形人
     'animal_general-area':{                 'id':11,       'train_id':0,       'type_id':4  },  #  动物
     'obstacle_cone-area':{                  'id':12,       'train_id':5,       'type_id':5  },  #  锥桶
     'obstacle_triangle-area':{              'id':13,       'train_id':5,       'type_id':5  },  #  紧急三角架
     'obstacle_waterhorse-area':{            'id':14,       'train_id':5,       'type_id':5  },  #  水马
     'obstacle_else-area':{                  'id':15,       'train_id':5,       'type_id':5  },  #  人工障碍物（其他）
     'obstacle_column-area':{                'id':16,       'train_id':5,       'type_id':5  },  #  警示柱子
-    'marking_diversionline_white-area':{    'id':17,       'train_id':5,       'type_id':6  },  #  白色导流带
-    'marking_diversionline_yellow-area':{   'id':18,       'train_id':5,       'type_id':6  },  #  黄色导流带
-    'marking_speedbump-area':{              'id':19,       'train_id':5,       'type_id':6  },  #  凸减速带
-    'marking_nostopgrid_white-area':{       'id':20,       'train_id':5,       'type_id':6  },  #  白色禁停网格区
-    'marking_nostopgrid_yellow-area':{      'id':21,       'train_id':5,       'type_id':6  },  #  黄色禁停网格区
-    'marking_general_white-area':{          'id':22,       'train_id':5,       'type_id':6  },  #  白色路面符号
-    'marking_general_yellow-area':{         'id':23,       'train_id':5,       'type_id':6  },  #  黄色路面符号
-    'marking_line_white-area':{             'id':24,       'train_id':5,       'type_id':6  },  #  白色车道线
-    'marking_line_yellow-area':{            'id':25,       'train_id':5,       'type_id':6  },  #  黄色车道线
-    'marking_pavement_white-area':{         'id':26,       'train_id':5,       'type_id':6  },  #  白色人行道
-    'marking_pavement_yellow-area':{        'id':27,       'train_id':5,       'type_id':6  },  #  黄色人行道
-    'marking_stop_white-area':{             'id':28,       'train_id':5,       'type_id':6  },  #  白色停止线
-    'marking_stop_yellow-area':{            'id':29,       'train_id':5,       'type_id':6  },  #  黄色停止线
-    'marking_parking_white-area':{          'id':30,       'train_id':5,       'type_id':6  },  #  白色停车线
-    'marking_parking_yellow-area':{         'id':31,       'train_id':5,       'type_id':6  },  #  黄色停车线
-    'rod_charge-area':{                     'id':32,       'train_id':5,       'type_id':7  },  #  收费杆
-    'rod_longmen-area':{                    'id':33,       'train_id':5,       'type_id':8  },  #  龙门架
-    'self_genral-area':{                    'id':34,       'train_id':5,       'type_id':9  },  #  车本身(前视摄像头可能在底部获取车本身)
-    'curb_line-line':{                      'id':35,       'train_id':5,       'type_id':6  },  #  道路结构线 
+    'marking_diversionline_white-area':{    'id':17,       'train_id':6,       'type_id':6  },  #  白色导流带
+    'marking_diversionline_yellow-area':{   'id':18,       'train_id':7,       'type_id':6  },  #  黄色导流带
+    'marking_speedbump-area':{              'id':19,       'train_id':0,       'type_id':6  },  #  凸减速带
+    'marking_nostopgrid_white-area':{       'id':20,       'train_id':6,       'type_id':6  },  #  白色禁停网格区
+    'marking_nostopgrid_yellow-area':{      'id':21,       'train_id':7,       'type_id':6  },  #  黄色禁停网格区
+    'marking_general_white-area':{          'id':22,       'train_id':6,       'type_id':6  },  #  白色路面符号
+    'marking_general_yellow-area':{         'id':23,       'train_id':7,       'type_id':6  },  #  黄色路面符号
+    'marking_line_white-area':{             'id':24,       'train_id':8,       'type_id':6  },  #  白色车道线
+    'marking_line_yellow-area':{            'id':25,       'train_id':9,       'type_id':6  },  #  黄色车道线
+    'marking_pavement_white-area':{         'id':26,       'train_id':6,       'type_id':6  },  #  白色人行道
+    'marking_pavement_yellow-area':{        'id':27,       'train_id':7,       'type_id':6  },  #  黄色人行道
+    'marking_stop_white-area':{             'id':28,       'train_id':6,       'type_id':6  },  #  白色停止线
+    'marking_stop_yellow-area':{            'id':29,       'train_id':7,       'type_id':6  },  #  黄色停止线
+    'marking_parking_white-area':{          'id':30,       'train_id':6,       'type_id':6  },  #  白色停车线
+    'marking_parking_yellow-area':{         'id':31,       'train_id':7,       'type_id':6  },  #  黄色停车线
+    'rod_charge-area':{                     'id':32,       'train_id':0,       'type_id':7  },  #  收费杆
+    'rod_longmen-area':{                    'id':33,       'train_id':0,       'type_id':8  },  #  龙门架
+    'self_genral-area':{                    'id':34,       'train_id':1,       'type_id':9  },  #  车本身(前视摄像头可能在底部获取车本身)
+    'curb_line-line':{                      'id':35,       'train_id':10,       'type_id':6  },  #  道路结构线 
 }
 
 # 车道线
@@ -282,7 +282,7 @@ def CA_multi_task_label(input_path, output_path, count_output_file, image_path='
 if __name__ == "__main__":
     parser = argparse.ArgumentParser(description="CA Joint MultiTask dataset format to corresponding task dataset format!", epilog="CA dataset is too complex! FUCK IT!")
     # parser.add_argument('-p', '--input_path', type=str, required=True, help='The whole dataset dir', metavar='CA_input_path')
-    parser.add_argument('-p', '--input_path', type=str, required=True, help='The whole dataset dir', metavar='CA_input_path') # FOR IDE
+    parser.add_argument('-p', '--input_path', type=str, default='./', help='The whole dataset dir', metavar='CA_input_path') # FOR IDE
     parser.add_argument('-o', '--output_path', type=str, default='./', help='The output dataset dir', metavar='CA_output_path')
     parser.add_argument('-c', '--count_output_file', type=str, default='./statistics.txt', help='The output name to save quantity statistics infomation', metavar='CA_count_output_path')
     opt = parser.parse_args()
