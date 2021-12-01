@@ -9,7 +9,20 @@ from pathlib import Path
 
 logging.basicConfig(format='%(levelname)s:%(message)s', level=logging.INFO)
 
-def batch_copy(copy_to_path, from_path, lane_dir_name='labels_lane', obj_dir_name='labels_obj', semantic_dir_name='labels_semantic'):
+def multi_task_batch_copy(copy_to_path, from_path, lane_dir_name='labels_lane', obj_dir_name='labels_obj', semantic_dir_name='labels_semantic'):
+    '''
+    联合标注多任务数据标签进行文件复制，当前任务包括车道线识别、目标检测和语义识别
+
+    Args:
+        copy_to_path: 需要复制去的目录
+        from_path: 复制的源目录，该目录下需要包括三个任务对应的标签
+        lane_dir_name: 车道线标签数据的目录名称
+        obj_dir_name: 目标检测标签数据的目录名称
+        semantic_dir_name: 语义分割标签数据的目录名称
+
+    Returns:
+        None
+    '''
     copy2path = Path(copy_to_path)
     copy_from_path = Path(from_path)
 
@@ -35,4 +48,4 @@ if __name__ == "__main__":
     # parser.add_argument('-f', '--from_path', type=str, default='./path2/images', help='from path! this path must be images path and dir tree must be same!', metavar='from_path')
     opt = parser.parse_args()
 
-    batch_copy(opt.copy_to_path, opt.from_path)
+    multi_task_batch_copy(opt.copy_to_path, opt.from_path)
