@@ -9,7 +9,22 @@ from sklearn.cluster import KMeans
 
 logging.basicConfig(format='%(levelname)s:%(message)s', level=logging.INFO)
 
-def cluster_yolo2anchor(label_path, width, height, output_anchor_file='./yolo_anchor.txt', cluster_number=9, cluster_init='k-means++',n_init=5): # n_init指定Kmeans运行的次数
+def cluster_yolo2anchor(label_path, width, height, output_anchor_file='./yolo_anchor.txt', cluster_number=9, cluster_init='k-means++', n_init=5): # n_init指定Kmeans运行的次数
+    '''
+    对整体框进行聚类，获取最佳框的输出
+
+    Args:
+        label_path: 保存的yolo格式的txt文件夹的位置
+        width: 原始标签对应图像的宽度
+        height: 原始标签对应的图像的高度
+        output_anchor_file: 输出聚类anchor的文件名绝对路径
+        cluster_number: 聚类的anchor个数
+        cluster_init: 初始化KMeans所使用的方法
+        n_init: 聚类的次数
+
+    Returns:
+        None
+    '''
     label_path = Path(label_path)
     output_anchor_file = Path(output_anchor_file)
 
@@ -23,7 +38,7 @@ def cluster_yolo2anchor(label_path, width, height, output_anchor_file='./yolo_an
     bbox = np.array(bbox, dtype=np.float32)
     weight = np.array([width, height], dtype=np.float32)
     bbox = bbox * weight
-    kmeans = KMeans(init=cluster_init, n_clusters=cluster_number, n_init=5, random_state=0, max_iter=1000) # 最大KMeans迭代次数
+    kmeans = KMeans(init=cluster_init, n_clusters=cluster_number, n_init=n_init, random_state=0, max_iter=1000) # 最大KMeans迭代次数
     logging.info('Clustering...')
     kmeans.fit(bbox)
     centroids = kmeans.cluster_centers_

@@ -2,6 +2,7 @@
 
 # Base ----------------------------------------
 tqdm
+scipy
 numpy
 imgaug
 Pillow

@@ -1,6 +1,5 @@
 # CA目标检测数据集格式转换为YOLO数据集格式脚本
 
-import os
 import glob
 import json
 import shutil
@@ -157,6 +156,21 @@ def _categorys_count_init(categorys_dict:dict = OBJECT_DICT) -> dict:
 
 
 def CA_multi_task_label(input_path, output_path, count_output_file, image_path='images', labels_lane='labels_lane', labels_obj='labels_obj', labels_semantic='labels_semantic'):
+    '''
+    CA数据集的多任务联合标注标签处理，输出的标签包括目标检测、语义分割和车道线识别标签
+
+    Args:
+        input_path: 整体数据集保存的路径(由于CA的数据集前期表述非常的不一致，这里的读取方式相对而言比较奇葩)
+        output_path: 标签输出的目录，最后包括目标检测、语义分割和车道线识别标签
+        count_output_file: 计数文件保存的绝对路径，该文件用于统计各个标签的个数
+        image_path: output_path路径下保存图像的目录名
+        labels_lane: output_path路径下保存车道线标签的目录名
+        labels_obj: output_path路径下保存目标检测标签的目录名
+        labels_semantic: output_path路径下保存语义分割标签的目录名
+
+    Returns:
+        None
+    '''
     input_path = Path(input_path).resolve()
     if not input_path.is_dir():
         raise Exception(f'ERROR: {str(input_path)} is not a dir')
