@@ -1,7 +1,6 @@
 # pip install -i https://mirrors.aliyun.com/pypi/simple/ -r 
 
 # Base ----------------------------------------
-cv2
 tqdm
 scipy
 numpy
