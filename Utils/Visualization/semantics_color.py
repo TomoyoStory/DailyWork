@@ -68,7 +68,7 @@ def semantics_color(input_path, output_path, mix_src_path, mix_output_path):
 if __name__ == '__main__':
     parser = argparse.ArgumentParser(description="Change uint8 Semantic segmentation image to color image for checking", epilog="Color means much! Really~")
     parser.add_argument('-i', '--input_path', type=str, required=True, help='the path of uint8 Semantic segmentation image', metavar='seg_input_path')
-    parser.add_argument('-i', '--input_path', type=str, default='./', help='the path of uint8 Semantic segmentation image', metavar='seg_input_path') # For IDE
+    # parser.add_argument('-i', '--input_path', type=str, default='./', help='the path of uint8 Semantic segmentation image', metavar='seg_input_path') # For IDE
     parser.add_argument('-o', '--output_path', type=str, default='./labels_semantic_color', help='the path to get color image!', metavar='color_output_path')
     parser.add_argument('-mi', '--mix_src_path', type=str, default='./images', help='the path to src color image for fix image!', metavar='mix_input_path')  # mix原图便于对比好看
     parser.add_argument('-mo', '--mix_output_path', type=str, default='./labels_semantic_mix_color', help='the path to get mix color image!', metavar='mix_output_path')  # mix图像输出路径
