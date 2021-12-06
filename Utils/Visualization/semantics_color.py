@@ -1,3 +1,5 @@
+# 语义分割颜色绘制，从而便于查看模型或者相关标签的情况
+
 import os
 import logging
 import argparse
