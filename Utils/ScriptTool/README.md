@@ -12,4 +12,6 @@ ScriptTool模块为各项通用脚本工具，包括重命名、数据复制、�
 <details open>
 <summary><b><font color=Indigo>脚本文件</font></b></summary>
 <font color=CornflowerBlue>BatchRename.py</font>完成批量文件的重命名。
+
+<font color=CornflowerBlue>ObjectImageWeightSample.py</font>针对序列标注的目标检测图像，根据图像中出现的框的个数进行随机采样。
 </details>
