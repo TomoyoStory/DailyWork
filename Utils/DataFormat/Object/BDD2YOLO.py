@@ -37,7 +37,7 @@ def bdd_to_yolo(bdd_label_path, yolo_label_path,categorys,width=1280,height=720)
             j = f.read()
         data = json.loads(j)
         
-        for datum in tqdm(data, desc='Writing %s yolo format file'%trainval):
+        for datum in tqdm(data, desc='Writing %s yolo format file'%trainval, unit='files'):
             file_str = '' # 保存每个文件所需的字段
             for label in datum['labels']:
                 box2d = label.get('box2d') # 存在box2d

@@ -197,7 +197,7 @@ def bbox_color(image_input_path, label_input_path, output_path):
     logging.info(f'Reading the labels from {str(label_input_path)}.')
     # TODO 多进程加速绘制流程
     labels = [x for x in list(label_input_path.iterdir()) if x.suffix in '.txt']
-    for label in tqdm(labels, desc='Drawing the bbox to images and save the images'):
+    for label in tqdm(labels, desc='Drawing the bbox to images and save the images', unit='batchs'):
         image_path = image_input_path.joinpath(label.stem + '.jpg')
         image = np.array(Image.open(image_path)) # image
         height, width= image.shape[0], image.shape[1]

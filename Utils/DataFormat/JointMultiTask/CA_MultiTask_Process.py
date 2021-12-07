@@ -194,7 +194,7 @@ def CA_multi_task_label(input_path, output_path, count_output_file, image_path='
     
     # 图像处理
     images_dict = {}
-    for x in tqdm(images, desc='Processing the image name and path!'):
+    for x in tqdm(images, desc='Processing the image name and path!', unit='bathcs'):
         x = Path(x)
         parent_dir_last = x.parent.name.split('_')[-1] # 父目录最后'_'分割后的摄像头名称
         if 'cam' in parent_dir_last:
@@ -209,7 +209,7 @@ def CA_multi_task_label(input_path, output_path, count_output_file, image_path='
 
     # 标签处理
     label_dict = {}
-    for x in tqdm(labels, desc='Fusing three kinds of label to one!'):
+    for x in tqdm(labels, desc='Fusing three kinds of label to one!', unit='labels'):
         with open(x, 'r', encoding='utf-8') as f:
             for oneline in f.readlines():
                 if  oneline.startswith('http'):
@@ -232,7 +232,7 @@ def CA_multi_task_label(input_path, output_path, count_output_file, image_path='
     lane_count = _categorys_count_init(LANE_DICT)
     
     # TODO 多进程提升效率
-    for x in tqdm(label_dict.keys(), desc='Copying the image and Processing the corresponding task label!'):
+    for x in tqdm(label_dict.keys(), desc='Copying the image and Processing the corresponding task label!', unit='imgs'):
         if x in images_dict.keys(): # 存在标签不一致的情况
             elements = label_dict[x]['result'][0]['elements']
             width = label_dict[x]['result'][0]['size']['width']
@@ -289,7 +289,7 @@ def CA_multi_task_label(input_path, output_path, count_output_file, image_path='
         f.write('\n车道线统计\n')
         for key in sorted(lane_count.keys()):
             f.write(key + ':' + str(lane_count[key]) + '\n')
-    
+            
     logging.info('All Finish! (*╹▽╹*),HaHa~')
 
 

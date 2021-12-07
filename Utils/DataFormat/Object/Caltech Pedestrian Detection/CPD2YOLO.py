@@ -86,7 +86,7 @@ def vbb2yolo(input_path, image_input_path, output_path, filter_area):
     vbb_files = [Path(x) for x in vbb_files if x.split('.')[-1].lower()=='vbb'] # 获取seq文件图像路径
 
     # TODO 多进程加速数据获取
-    for vbb_file in tqdm(vbb_files, desc='Geting the YOLOv5 format images and labels'):
+    for vbb_file in tqdm(vbb_files, desc='Geting the YOLOv5 format images and labels', unit='labels'):
         annos = _vbb_anno2dict(vbb_file, images_output_path, image_input_path, filter_area)
         if annos:
             for filename, anno in sorted(annos.items(), key=lambda x: x[0]):

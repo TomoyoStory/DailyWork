@@ -29,7 +29,7 @@ def cluster_yolo2anchor(label_path, width, height, output_anchor_file='./yolo_an
     output_anchor_file = Path(output_anchor_file)
 
     bbox = []
-    for file in tqdm(list(label_path.iterdir()), desc=f'Reading file from {str(label_path)}'):
+    for file in tqdm(list(label_path.iterdir()), desc=f'Reading file from {str(label_path)}', unit='files'):
         if file.is_file() and file.suffix == '.txt':
             with open(file, 'r') as f:
                 for oneline in f.readlines():

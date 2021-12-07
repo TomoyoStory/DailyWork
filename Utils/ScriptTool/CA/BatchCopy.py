@@ -29,7 +29,7 @@ def multi_task_batch_copy(copy_to_path, from_path, lane_dir_name='labels_lane', 
     copy2path.parent.joinpath(lane_dir_name).mkdir(exist_ok=True)
     copy2path.parent.joinpath(obj_dir_name).mkdir(exist_ok=True)
     copy2path.parent.joinpath(semantic_dir_name).mkdir(exist_ok=True)
-    for file in tqdm(list(copy2path.iterdir()), desc='Copying the files'): 
+    for file in tqdm(list(copy2path.iterdir()), desc='Copying the files', unit='batchs'): 
         if file.is_file():
             absolute_path = str(copy_from_path.resolve().joinpath(file.stem))
             lane_label_path = lane_dir_name.join(absolute_path.rsplit('images',1)) + '.json'

@@ -27,7 +27,7 @@ def seqs2images(input_path, output_path):
     files = glob.glob(str(input_path.joinpath('**')), recursive=True)
     files = [Path(x) for x in files if x.split('.')[-1].lower()=='seq'] # 获取seq文件图像路径
 
-    for x in tqdm(files, desc='Geting the images!'):
+    for x in tqdm(files, desc='Geting the images!', unit='imgs'):
         parent_str = x.parent.name
         parent_dir = output_path.joinpath(parent_str).joinpath(x.stem)
         parent_dir.mkdir(exist_ok=True, parents=True)

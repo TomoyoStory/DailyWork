@@ -18,7 +18,7 @@ def batch_rename(path, start_pos):
     Returns:
         None
     '''
-    for file in tqdm(os.listdir(path), desc='Changing the name'):
+    for file in tqdm(os.listdir(path), desc='Changing the name', unit='files'):
         current_file_name = os.path.join(path, file)
         if os.path.isfile(current_file_name):
             new_name = os.path.join(path, '%07d.jpg'%start_pos) #! 这里可以修改整个索引的起始位置和后缀

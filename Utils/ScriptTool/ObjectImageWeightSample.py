@@ -40,7 +40,7 @@ def object_image_weight_sample(imgs_input_path, labels_input_path, imgs_output_p
     labels_list = list(labels_input_path.glob('*.txt'))
     
     list_weight = []
-    for x in tqdm(labels_list, desc='Getting the lables number of each file!'): # TODO 多进程加速运算速度
+    for x in tqdm(labels_list, desc='Getting the lables number of each file!', unit='files'): # TODO 多进程加速运算速度
         with open(x, '', encoding='utf-8') as f:
             file_str = f.read()
             count = len(file_str.split('\n')) - 1
@@ -51,7 +51,7 @@ def object_image_weight_sample(imgs_input_path, labels_input_path, imgs_output_p
     val_indices = indices[int(0.75*len(indices)):]
 
     # 训练集复制
-    for x in tqdm(train_indices, desc='Copying Train Dataset'):
+    for x in tqdm(train_indices, desc='Copying Train Dataset', unit='batchs'):
         src_label = labels_list[x]
         dst_label = labels_output_path.joinpath('train').joinpath('labels').joinpath(src_label.name)
         src_image = imgs_input_path.joinpath(src_label.stem + '.jpg') #^ 图像格式后缀根据情况修改
@@ -60,7 +60,7 @@ def object_image_weight_sample(imgs_input_path, labels_input_path, imgs_output_p
         shutil.copy(src_image, dst_image)
     
     # 验证集复制
-    for x in tqdm(val_indices, desc='Copying Val Dataset'):
+    for x in tqdm(val_indices, desc='Copying Val Dataset', unit='batchs'):
         src_label = labels_list[x]
         dst_label = labels_output_path.joinpath('val').joinpath('labels').joinpath(src_label.name)
         src_image = imgs_input_path.joinpath(src_label.stem + '.jpg') #^ 图像格式后缀根据情况修改

@@ -99,7 +99,7 @@ def tt100k_to_crop_multiclass(annotations_path, output_label_path):
     test_categorys_count = _tt100K_categorys_count(categorys) # 初始化验证集整体类别计数字典
 
     info_list = [] # 保存所有的crop信息
-    for label in tqdm(data["imgs"], desc='Getting the rectangle and ROI information'): #^ 字典的for in语句得到的是key
+    for label in tqdm(data["imgs"], desc='Getting the rectangle and ROI information', unit='batchs'): #^ 字典的for in语句得到的是key
         path = data["imgs"][label]['path']
         # 训练集与验证集
         dataset = path.split('/')[0] # train, test, other

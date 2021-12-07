@@ -64,7 +64,7 @@ def semantics_color(input_path, output_path, mix_src_path, mix_output_path):
     logging.info('Filtering the files')
     images_list = [x for x in images_list if x.is_file() and x.suffix in IMG_FORMATS] # filter
     with Pool(NUM_THREADS) as pool:
-        pbar = tqdm(pool.imap(_seg_color_and_save, zip(images_list, repeat(output_path), repeat(mix_src_path), repeat(mix_output_path))), desc='Coloring the origin uint8 semantic segmentation image!', total=len(images_list))
+        pbar = tqdm(pool.imap(_seg_color_and_save, zip(images_list, repeat(output_path), repeat(mix_src_path), repeat(mix_output_path))), desc='Coloring the origin uint8 semantic segmentation image!', total=len(images_list), unit='imgs')
         for i in pbar:
             pbar.update()            
 
