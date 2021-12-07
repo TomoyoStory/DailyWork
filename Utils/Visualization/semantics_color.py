@@ -19,6 +19,9 @@ NUM_THREADS = min(4, os.cpu_count())  # 进程数
 logging.basicConfig(format='%(levelname)s:%(message)s', level=logging.INFO)
 
 def _seg_color_and_save(args):
+    '''
+    标签颜色的获取和保存，以下的代码根据实际的数据集的情况，适配性的修改。
+    '''
     mask_path, output_path, mix_src_path, mix_output_path = args
     mask = np.array(Image.open(mask_path)) # mask
     segmap = SegmentationMapsOnImage(mask, shape=mask.shape) # SegmentationMapsOnImage原始draw颜色list查看源码
@@ -56,6 +59,7 @@ def semantics_color(input_path, output_path, mix_src_path, mix_output_path):
         mix_output_path = Path(mix_output_path)
         mix_output_path.mkdir(exist_ok=True)
     
+    logging.info('Getting the files path')
     images_list = list(input_path.iterdir())
     logging.info('Filtering the files')
     images_list = [x for x in images_list if x.is_file() and x.suffix in IMG_FORMATS] # filter
