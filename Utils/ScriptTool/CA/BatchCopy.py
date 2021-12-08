@@ -9,7 +9,11 @@ from pathlib import Path
 
 logging.basicConfig(format='%(levelname)s:%(message)s', level=logging.INFO)
 
-def multi_task_batch_copy(copy_to_path, from_path, lane_dir_name='labels_lane', obj_dir_name='labels_obj', semantic_dir_name='labels_semantic'):
+def multi_task_batch_copy(copy_to_path: str, 
+                          from_path: str, 
+                          lane_dir_name: str='labels_lane', 
+                          obj_dir_name: str='labels_obj', 
+                          semantic_dir_name: str='labels_semantic') -> None:
     '''
     联合标注多任务数据标签进行文件复制，当前任务包括车道线识别、目标检测和语义识别
 

@@ -16,9 +16,11 @@ from imgaug.augmentables.segmaps import SegmentationMapsOnImage
 IMG_FORMATS = ['.png']  # 当前仅保留了PNG图
 NUM_THREADS = min(4, os.cpu_count())  # 进程数
 
+
 logging.basicConfig(format='%(levelname)s:%(message)s', level=logging.INFO)
 
-def _seg_color_and_save(args):
+
+def _seg_color_and_save(args:tuple) -> None:
     '''
     标签颜色的获取和保存，以下的代码根据实际的数据集的情况，适配性的修改。
     '''
@@ -37,7 +39,10 @@ def _seg_color_and_save(args):
         Image.fromarray(color_mask_on_image).save(mix_dst_path)
 
 
-def semantics_color(input_path, output_path, mix_src_path, mix_output_path):
+def semantics_color(input_path: str, 
+                    output_path: str, 
+                    mix_src_path: str, 
+                    mix_output_path: str) -> None:
     '''
     将原始的语义分割图(基本查看全是黑色)转化为由颜色表示的图像，并根据mix_src_path存在情况在原图上绘制
 
@@ -64,7 +69,8 @@ def semantics_color(input_path, output_path, mix_src_path, mix_output_path):
     logging.info('Filtering the files')
     images_list = [x for x in images_list if x.is_file() and x.suffix in IMG_FORMATS] # filter
     with Pool(NUM_THREADS) as pool:
-        pbar = tqdm(pool.imap(_seg_color_and_save, zip(images_list, repeat(output_path), repeat(mix_src_path), repeat(mix_output_path))), desc='Coloring the origin uint8 semantic segmentation image!', total=len(images_list), unit='imgs')
+        pbar = tqdm(pool.imap(_seg_color_and_save, zip(images_list, repeat(output_path), repeat(mix_src_path), repeat(mix_output_path))), 
+                    desc='Coloring the origin uint8 semantic segmentation image!', total=len(images_list), unit='imgs')
         for i in pbar:
             pbar.update()            
 

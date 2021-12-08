@@ -14,7 +14,11 @@ from multiprocessing.pool import Pool
 NUM_THREADS = min(8, os.cpu_count())  # number of multiprocessing threads
 logging.basicConfig(format='%(levelname)s:%(message)s', level=logging.INFO)
 
-def tt100k_to_yolo_single(annotations_path, output_label_path, single_index, width=2048, height=2048):
+def tt100k_to_yolo_single(annotations_path: str, 
+                          output_label_path: str, 
+                          single_index: int, 
+                          width: int=2048, 
+                          height: int=2048) -> None:
     '''
     该函数只提取标示牌，并不对标示牌的具体类别进行分类拆分,注意，这里的格式输出为x_center,y_center,w,h
 
@@ -65,7 +69,7 @@ def tt100k_to_yolo_single(annotations_path, output_label_path, single_index, wid
     logging.info('All Finish! (*￣︶￣) ,233~')
 
 
-def tt100k_to_crop_multiclass(annotations_path, output_label_path):
+def tt100k_to_crop_multiclass(annotations_path: str, output_label_path: str) -> None:
     '''
     该函数提取标示牌，截取标示牌部分像素，并对具体的标示牌进行拆分分类,要求annotations.json目录下保存train和val目录(原始数据集保存格式)
 
@@ -132,7 +136,7 @@ def tt100k_to_crop_multiclass(annotations_path, output_label_path):
     logging.info('All Finish! (*╹▽╹*),HaHa~')
             
 
-def _crop_and_save(info_item):
+def _crop_and_save(info_item: list) -> None:
     absolute_path = info_item[0]
     box = info_item[1]
     region_path_name = info_item[2]
@@ -141,7 +145,7 @@ def _crop_and_save(info_item):
         region.save(region_path_name)
 
 
-def _tt100K_categorys_count(categorys):
+def _tt100K_categorys_count(categorys: list) -> dict:
     '''
     统计每一类类别的数量，便于整体的命名
 
@@ -157,7 +161,7 @@ def _tt100K_categorys_count(categorys):
     return categorys_count
 
 
-def _tt100K_categorys_count_output(names_path, categorys_count_dict):
+def _tt100K_categorys_count_output(names_path: str, categorys_count_dict: dict) -> None:
     '''
     该函数用于类别计数，便于评估整体标注后相关标签的数量，便于数据分析与样本均衡
 

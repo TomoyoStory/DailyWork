@@ -6,13 +6,18 @@ import logging
 import argparse
 import numpy as np
 from tqdm import tqdm
+from typing import Union
 from pathlib import Path
 from scipy.io import loadmat
+
 
 logging.basicConfig(format='%(levelname)s:%(message)s', level=logging.INFO)
 
 
-def _vbb_anno2dict(vbb_file, images_output_path, image_input_path, filter_area=600):
+def _vbb_anno2dict(vbb_file: Union[str, Path], 
+                   images_output_path: Path, 
+                   image_input_path: Path, 
+                   filter_area: Union[float, int]=600) -> None:
     '''
     读取目录下单独的.vbb文件，处理获取该.vbb文件对应的的.seq图像序列中的数据,并过滤比较小的面积目标
 
@@ -60,7 +65,10 @@ def _vbb_anno2dict(vbb_file, images_output_path, image_input_path, filter_area=6
     return annos
 
 
-def vbb2yolo(input_path, image_input_path, output_path, filter_area):
+def vbb2yolo(input_path: str, 
+             image_input_path: str, 
+             output_path: str, 
+             filter_area: Union[float, int]) -> None:
     '''
     读取目录下所有的.vbb文件，将根据转换得到的数据信息，进行图像的复制和标签的获取
 

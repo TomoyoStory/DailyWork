@@ -3,12 +3,13 @@
 import os
 import argparse
 from tqdm import tqdm
+from typing import Union
 from pathlib import Path
 import xml.etree.ElementTree as ET
 
 CLASSES = ["persoon","car"] #! 根据数据标注情况选取实际的需要的类别
 
-def xyxy2xywh(size, box):
+def xyxy2xywh(size: list, box: list) -> tuple:
     '''
     将xyxy格式数据转换为xywh格式
 
@@ -28,7 +29,11 @@ def xyxy2xywh(size, box):
     return (x, y, w, h)
 
 
-def voc2yolo(input_path, output_path, width=None, height=None, save_difficult=False):
+def voc2yolo(input_path: str, 
+             output_path: str, 
+             width: Union[int, None] =None, 
+             height: Union[int, None]=None, 
+             save_difficult: bool=False) -> None:
     '''
     将VOC的xml格式数据转换为YOLOv5的xywh格式
 

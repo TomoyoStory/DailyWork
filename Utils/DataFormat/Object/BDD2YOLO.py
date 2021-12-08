@@ -9,7 +9,11 @@ from tqdm import tqdm
 logging.basicConfig(format='%(levelname)s:%(message)s', level=logging.INFO)
 
 
-def bdd_to_yolo(bdd_label_path, yolo_label_path,categorys,width=1280,height=720):
+def bdd_to_yolo(bdd_label_path: str, 
+                yolo_label_path: str,
+                categorys: list,
+                width: int=1280,
+                height: int=720) -> None:
     '''
     将BDD数据集格式转换为YOLO格式，注意，这里的格式输出为x_center,y_center,w,h
 
@@ -25,8 +29,8 @@ def bdd_to_yolo(bdd_label_path, yolo_label_path,categorys,width=1280,height=720)
     '''
     label_path = bdd_label_path + os.sep + "bdd100k_labels_images_%s.json"
     categorys_dict = {}  # 类别映射字典
-    for i, categorys in enumerate(categorys):
-        categorys_dict.update({categorys:i})
+    for i, category in enumerate(categorys):
+        categorys_dict.update({category:i})
 
     for trainval in ['val','train']:  
         json_path = label_path % trainval
@@ -59,7 +63,7 @@ def bdd_to_yolo(bdd_label_path, yolo_label_path,categorys,width=1280,height=720)
     logging.info('All Finish! ~~~///(^v^)\\\~~~ ,233~')
 
 
-def get_bdd_categorys(bdd_label_path, output_path):
+def get_bdd_categorys(bdd_label_path: str, output_path: str) -> None:
     '''
     获取BDD数据集的整体类别与对应类别数量，并根据str名称进行排序输出具体类别和对应个数
 
@@ -103,7 +107,7 @@ def get_bdd_categorys(bdd_label_path, output_path):
     return all_categorys
 
 
-def bdd100k_labels_process(labels):
+def bdd100k_labels_process(labels: dict) -> str:
     '''
     处理原始的字典中的相关参数。 #! 该函数根据需求可进行输出的各类变动
 
@@ -111,7 +115,7 @@ def bdd100k_labels_process(labels):
         labels：labels代表原始json中的labels数组
 
     Returns:
-        labels(dict):原始标签处理后的数据
+        labels['category']:原始标签处理后的类别名称
     
     '''
     if labels['category'] == "traffic light": 
@@ -133,7 +137,7 @@ def bdd100k_labels_process(labels):
     return labels['category']
 
 
-def get_bdd_categorys_from_file(bdd100k_file_path):
+def get_bdd_categorys_from_file(bdd100k_file_path: str) -> list:
     '''
     从名称文件中获取BDD数据集的类别
 

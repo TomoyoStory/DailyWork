@@ -7,7 +7,7 @@ from tqdm import tqdm
 
 logging.basicConfig(format='%(levelname)s:%(message)s', level=logging.INFO)
 
-def batch_rename(path, start_pos):
+def batch_rename(path: str, start_pos: int) -> None:
     '''
     批量文件命名格式修改，该函数完成针对path路径下的文件名称修改为标准0000001.jpg的数据名称
 

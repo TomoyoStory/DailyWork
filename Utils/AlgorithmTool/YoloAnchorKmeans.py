@@ -9,7 +9,13 @@ from sklearn.cluster import KMeans
 
 logging.basicConfig(format='%(levelname)s:%(message)s', level=logging.INFO)
 
-def cluster_yolo2anchor(label_path, width, height, output_anchor_file='./yolo_anchor.txt', cluster_number=9, cluster_init='k-means++', n_init=5): # n_init指定Kmeans运行的次数
+def cluster_yolo2anchor(label_path: str, 
+                        width: int, 
+                        height: int, 
+                        output_anchor_file: str ='./yolo_anchor.txt', 
+                        cluster_number: int=9, 
+                        cluster_init: str='k-means++', 
+                        n_init: int=5) -> None: 
     '''
     对整体框进行聚类，获取最佳框的输出
 
@@ -20,7 +26,7 @@ def cluster_yolo2anchor(label_path, width, height, output_anchor_file='./yolo_an
         output_anchor_file: 输出聚类anchor的文件名绝对路径
         cluster_number: 聚类的anchor个数
         cluster_init: 初始化KMeans所使用的方法
-        n_init: 聚类的次数
+        n_init: 指定Kmeans运行的次数
 
     Returns:
         None

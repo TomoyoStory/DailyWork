@@ -6,6 +6,7 @@ import logging
 import argparse
 import numpy as np
 from tqdm import tqdm
+from typing import Union
 from pathlib import Path
 from PIL import Image, ImageDraw, ImageFont
 
@@ -29,7 +30,12 @@ class Colors:
 
 
 class BboxAnnotator:
-    def __init__(self, im, line_width=None, font_size=None, font='Arial.ttf', pil=False):
+    def __init__(self, 
+                 im: np.array, 
+                 line_width: int=None, 
+                 font_size: int=None, 
+                 font: str='Arial.ttf', 
+                 pil: bool=False):
         '''
         将原始的语义分割图(基本查看全是黑色)转化为由颜色表示的图像，并根据mix_src_path存在情况在原图上绘制
 
@@ -53,7 +59,11 @@ class BboxAnnotator:
             self.im = im
         self.lw = line_width or max(round(sum(im.shape) / 2 * 0.003), 2)  # line width
 
-    def box_label(self, box, label='', color=(128, 128, 128), txt_color=(255, 255, 255)):
+    def box_label(self, 
+                  box: Union[np.array, list], 
+                  label: str='', 
+                  color: tuple=(128, 128, 128), 
+                  txt_color: tuple=(255, 255, 255)) -> None:
         '''
         绘制xyxy格式的标签图在指定的图像上
 
@@ -91,7 +101,11 @@ class BboxAnnotator:
                             thickness=tf, lineType=cv2.LINE_AA)
 
     #^ 该函数仅做了封装，具体接口参数需根据使用情况修改
-    def rectangle_pil(self, box, fill=None, outline=None, width=1):
+    def rectangle_pil(self, 
+                      box: Union[np.array, list], 
+                      fill: Union[tuple, None]=None, 
+                      outline: Union[tuple, None]=None, 
+                      width: int=1):
         '''
         使用Pillow库进行框的绘制
 
@@ -110,7 +124,7 @@ class BboxAnnotator:
             raise Exception('BboxAnnotator Class do not use "pil=False"')
     
     #^ 该函数仅做了封装，具体接口参数需根据使用情况修改
-    def rectangle_cv(self, box, color=(128, 128, 128)):
+    def rectangle_cv(self, box: Union[np.array, list], color: tuple=(128, 128, 128)) -> None:
         '''
         使用OpenCv库进行框的绘制
 
@@ -125,7 +139,7 @@ class BboxAnnotator:
         cv2.rectangle(self.im, p1, p2, color, thickness=self.lw, lineType=cv2.LINE_AA)
 
     #^ 该函数仅做了封装，具体接口参数需根据使用情况修改
-    def text_pil(self, xy, text, txt_color=(255, 255, 255)):
+    def text_pil(self, xy: Union[np.array, list], text: str, txt_color: tuple=(255, 255, 255)) -> None:
         '''
         使用Pillow库进行文本的绘制
 
@@ -144,7 +158,11 @@ class BboxAnnotator:
         else:
             raise Exception('BboxAnnotator Class do not use "pil=False"')
     
-    def text_cv(self, box, text, color=(128, 128, 128), txt_color=(255, 255, 255)):
+    def text_cv(self, 
+                box: Union[np.array, list], 
+                text: str, 
+                color: tuple=(128, 128, 128), 
+                txt_color: tuple=(255, 255, 255)) -> None:
         '''
         使用OpenCv库进行加入背景颜色框的文本的绘制
 
@@ -175,7 +193,9 @@ class BboxAnnotator:
         '''
         return np.asarray(self.im)
 
-def bbox_color(image_input_path, label_input_path, output_path):
+def bbox_color(image_input_path: str, 
+               label_input_path: str, 
+               output_path: str):
     '''
     根据标签文件和原始图片绘制标注文件，便于整体的查看。
 

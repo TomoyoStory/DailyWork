@@ -155,7 +155,13 @@ def _categorys_count_init(categorys_dict:dict = OBJECT_DICT) -> dict:
     return categorys_count
 
 
-def CA_multi_task_label(input_path, output_path, count_output_file, image_path='images', labels_lane='labels_lane', labels_obj='labels_obj', labels_semantic='labels_semantic'):
+def CA_multi_task_label(input_path: str, 
+                        output_path: str, 
+                        count_output_file: str, 
+                        image_path: str='images', 
+                        labels_lane: str='labels_lane', 
+                        labels_obj: str='labels_obj', 
+                        labels_semantic: str='labels_semantic') -> None:
     '''
     CA数据集的多任务联合标注标签处理，输出的标签包括目标检测、语义分割和车道线识别标签
 

@@ -8,7 +8,7 @@ from pathlib import Path
 
 logging.basicConfig(format='%(levelname)s:%(message)s', level=logging.INFO)
 
-def seqs2images(input_path, output_path):
+def seqs2images(input_path: str, output_path: str) -> None:
     '''
     读取目录下所有的.seq文件，将其转换为实际的图片
 

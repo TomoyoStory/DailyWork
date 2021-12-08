@@ -11,7 +11,12 @@ from pathlib import Path
 logging.basicConfig(format='%(levelname)s:%(message)s', level=logging.INFO)
 
 
-def object_image_weight_sample(imgs_input_path, labels_input_path, imgs_output_path, labels_output_path, sample_scale=0.04, train_sacle=0.75):
+def object_image_weight_sample(imgs_input_path: str, 
+                               labels_input_path: str, 
+                               imgs_output_path: str, 
+                               labels_output_path: str, 
+                               sample_scale: float=0.04, 
+                               train_sacle: float=0.75) -> None:
     '''
     根据图像对应标签个数进行采样，采样比例
 
