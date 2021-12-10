@@ -47,14 +47,14 @@ def voc2yolo(input_path: str,
     Returns:
         None
     '''
-    for file in tqdm(os.listdir(input_path), desc='Changing VOC format to YOLO format!'):
+    for file in tqdm(os.listdir(input_path), desc='Changing VOC format to YOLO format!', unit='xmls'):
         label_file = input_path + os.sep + file
         if os.path.isfile(label_file) and Path(label_file).suffix.lower()[1:] == 'xml': # 指定仅读取xml
             with open(output_path + os.sep + file.replace('xml', 'txt'), 'w') as out_file:
                 tree = ET.parse(label_file)
                 root = tree.getroot()
                 size = root.find('size')
-                w = int(size.find('width').text) #! 同学给的原始VOC中宽高存在为零的问题,通过自行设置width和height覆盖解决这个问题
+                w = int(size.find('width').text) #! 原始VOC中宽高可能存在为零的问题,通过自行设置width和height覆盖解决这个问题
                 h = int(size.find('height').text)
                 if width:
                     w = width
