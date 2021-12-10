@@ -46,12 +46,12 @@ def object_image_weight_sample(imgs_input_path: str,
     
     list_weight = []
     for x in tqdm(labels_list, desc='Getting the lables number of each file!', unit='files'): # TODO 多进程加速运算速度
-        with open(x, '', encoding='utf-8') as f:
+        with open(x, 'r', encoding='utf-8') as f:
             file_str = f.read()
             count = len(file_str.split('\n')) - 1
             list_weight.append(count)
     
-    indices = random.sample(range(len(labels_list)), weights=list_weight, k=int(sample_scale*len(labels_list)))  # 根据权重随机采样
+    indices = random.sample(range(len(labels_list)), weights=list_weight)  # 根据权重随机采样
     train_indices = indices[:int(train_sacle*len(indices))]
     val_indices = indices[int(train_sacle*len(indices)):]
 
