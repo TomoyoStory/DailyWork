@@ -51,7 +51,7 @@ def object_image_weight_sample(imgs_input_path: str,
             count = len(file_str.split('\n')) - 1
             list_weight.append(count)
     
-    indices = random.choices(range(len(labels_list)), weights=list_weight, k=int(sample_scale*len(labels_list)))  # 根据权重随机采样
+    indices = random.sample(range(len(labels_list)), weights=list_weight, k=int(sample_scale*len(labels_list)))  # 根据权重随机采样
     train_indices = indices[:int(train_sacle*len(indices))]
     val_indices = indices[int(train_sacle*len(indices)):]
 
