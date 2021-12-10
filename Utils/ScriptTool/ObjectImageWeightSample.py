@@ -18,7 +18,7 @@ def object_image_weight_sample(imgs_input_path: str,
                                sample_scale: float=0.04, 
                                train_sacle: float=0.75) -> None:
     '''
-    根据图像对应标签个数进行采样，采样比例
+    根据图像对应标签个数进行采样，采样情况根据实际标签中标签个数进行权重采样
 
     Args:
         imgs_input_path: 输入图片的路径
