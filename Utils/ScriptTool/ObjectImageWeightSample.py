@@ -52,8 +52,8 @@ def object_image_weight_sample(imgs_input_path: str,
             list_weight.append(count)
     
     indices = random.choices(range(len(labels_list)), weights=list_weight, k=int(sample_scale*len(labels_list)))  # 根据权重随机采样
-    train_indices = indices[:int(0.75*len(indices))]
-    val_indices = indices[int(0.75*len(indices)):]
+    train_indices = indices[:int(train_sacle*len(indices))]
+    val_indices = indices[int(train_sacle*len(indices)):]
 
     # 训练集复制
     for x in tqdm(train_indices, desc='Copying Train Dataset', unit='batchs'):
