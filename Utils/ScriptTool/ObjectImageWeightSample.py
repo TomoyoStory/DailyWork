@@ -78,10 +78,10 @@ def object_image_weight_sample(imgs_input_path: str,
 
 if __name__ == '__main__':
     parser = argparse.ArgumentParser(description="Sample images to train dataset and val dataset depending on bbox number!", epilog="For the sample balance!")
-    # parser.add_argument('-i', '--input_path', type=str, required=True, help='the path of source image', metavar='src_input_path')
+    # parser.add_argument('-i', '--imgs_input_path', type=str, required=True, help='the path of source image', metavar='src_input_path')
     # parser.add_argument('-l', '--labels_input_path', type=str, default='./', help='the inputpath of labels!', metavar='labels_input_path')
-    # parser.add_argument('-i', '--imgs_input_path', type=str, default='./', help='the inputpath of source image', metavar='imgs_input_path') # For IDE
-    # parser.add_argument('-l', '--labels_input_path', type=str, default='./', help='the inputpath of labels!', metavar='labels_input_path')
+    parser.add_argument('-i', '--imgs_input_path', type=str, default='./', help='the inputpath of source image', metavar='imgs_input_path') # For IDE
+    parser.add_argument('-l', '--labels_input_path', type=str, default='./', help='the inputpath of labels!', metavar='labels_input_path')
     parser.add_argument('-io', '--imgs_output_path', type=str, default='./', help='the outpath of source image', metavar='imgs_output_path')
     parser.add_argument('-lo', '--labels_output_path', type=str, default='./', help='the outpath of labels!', metavar='labels_output_path')
     parser.add_argument('-s', '--sample_scale', type=float, default=0.04, help='the scale of sample!', metavar='sample_scale')
