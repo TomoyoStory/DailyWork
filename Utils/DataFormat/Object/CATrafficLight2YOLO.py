@@ -454,12 +454,12 @@ def CA_BAIDU_traffic_light_to_YOLO(lable_file: str,
     logging.info('All Finish! (*╹▽╹*), HaHa~')
 
 
-def CA_LabelMe_VOC_to_YOLO(input_path: str, 
-                           output_path: str, 
-                           count_output_file: str,
-                           width: Union[int, None] =None, 
-                           height: Union[int, None] = None, 
-                           save_difficult: bool=False ) -> None:
+def CA_Labelimg_VOC_to_YOLO(input_path: str, 
+                            output_path: str, 
+                            count_output_file: str,
+                            width: Union[int, None] =None, 
+                            height: Union[int, None] = None, 
+                            save_difficult: bool=False ) -> None:
     '''
     将VOC的xml格式数据转换为YOLOv5的xywh格式
 
@@ -485,7 +485,7 @@ def CA_LabelMe_VOC_to_YOLO(input_path: str,
 
     logging.info('Getting the xml labels')
     images_path = list(input_path.glob('*.xml'))
-    for label_file in tqdm(images_path, desc='Changing CA VOC format to YOLO format!', unit='xmls'):
+    for label_file in tqdm(images_path, desc='Changing CA Labelimg VOC format to YOLO format!', unit='xmls'):
         with open(output_path.joinpath(label_file.stem + '.txt'), 'w', encoding='utf-8') as out_file:
             tree = ET.parse(label_file)
             root = tree.getroot()
@@ -613,6 +613,6 @@ if __name__ == "__main__":
 
     # CA_BAIDU_traffic_light_to_YOLO(opt.lable_file, opt.output_path, opt.count_output_file)
 
-    # CA_LabelMe_VOC_to_YOLO(opt.lable_file, opt.output_path, opt.count_output_file, 1920, 1080) #^ 此处的长宽根据实际情况自行调整
+    # CA_Labelimg_VOC_to_YOLO(opt.lable_file, opt.output_path, opt.count_output_file, 1920, 1080) #^ 此处的长宽根据实际情况自行调整
 
     # CA_Single_Json_to_YOLO(opt.lable_file, opt.output_path, opt.count_output_file)
