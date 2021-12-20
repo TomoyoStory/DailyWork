@@ -538,7 +538,7 @@ def CA_Labelimg_VOC_to_YOLO(input_path: str,
     logging.info('All Finish! (*╹▽╹*), HaHa~')
 
 
-def CA_Single_Json_to_YOLO(input_path: str, 
+def CA_Labelme_Json_to_YOLO(input_path: str, 
                            output_path: str, 
                            count_output_file: str) -> None:
     '''
@@ -565,7 +565,7 @@ def CA_Single_Json_to_YOLO(input_path: str,
     logging.info('Getting the json labels')
     images_path = list(input_path.glob('*.json'))
 
-    for label_file in tqdm(images_path, desc='Changing CA BAIDU json format to YOLO format!', unit='jsons'):
+    for label_file in tqdm(images_path, desc='Changing CA Labelme json format to YOLO format!', unit='jsons'):
         with open(label_file, 'r', encoding='utf-8') as f:
             json_str = json.load(f)
         width = json_str['imageWidth']
@@ -615,4 +615,4 @@ if __name__ == "__main__":
 
     # CA_Labelimg_VOC_to_YOLO(opt.lable_file, opt.output_path, opt.count_output_file, 1920, 1080) #^ 此处的长宽根据实际情况自行调整
 
-    # CA_Single_Json_to_YOLO(opt.lable_file, opt.output_path, opt.count_output_file)
+    # CA_Labelme_Json_to_YOLO(opt.lable_file, opt.output_path, opt.count_output_file)
