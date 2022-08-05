@@ -1,4 +1,4 @@
-# 根据标签进行图像权重采样，并一部分作为训练集，一部分作为验证集
+# 根据标签进行图像权重采样,并一部分作为训练集,一部分作为验证集
 
 import random
 import shutil
@@ -18,7 +18,7 @@ def object_image_weight_sample(imgs_input_path: str,
                                sample_scale: float=0.04, 
                                train_sacle: float=0.75) -> None:
     '''
-    根据图像对应标签个数进行采样，采样情况根据实际标签中标签个数进行权重采样
+    根据图像对应标签个数进行采样,采样情况根据实际标签中标签个数进行权重采样
 
     Args:
         imgs_input_path: 输入图片的路径
@@ -51,7 +51,7 @@ def object_image_weight_sample(imgs_input_path: str,
             count = len(file_str.split('\n')) - 1
             list_weight.append(count)
     
-    indices = random.choices(range(len(labels_list)), weights=list_weight, k=int(sample_scale*len(labels_list)))  # 根据权重随机采样，会出现重复的情况
+    indices = random.choices(range(len(labels_list)), weights=list_weight, k=int(sample_scale*len(labels_list)))  # 根据权重随机采样,会出现重复的情况
     train_indices = indices[:int(train_sacle*len(indices))]
     val_indices = indices[int(train_sacle*len(indices)):]
 

@@ -17,8 +17,8 @@ IMG_FORMATS = ['bmp', 'jpg', 'jpeg', 'png', 'tif', 'tiff', 'dng', 'webp', 'mpo']
 LABEL_FORMATS = ['txt']
 # NUM_THREADS = min(8, os.cpu_count())  # number of multiprocessing threads
 
-#^ 以下定义根据CA标注需求和识别需求说明书定义，相关定义修改需严格遵照实际的需求和相关定义修改(常年根据实际情况改变)
-# ID代表实例类别，TrainID代表参与训练的ID(-1代表不参与训练)，TypeID表示类别ID
+#^ 以下定义根据CA标注需求和识别需求说明书定义,相关定义修改需严格遵照实际的需求和相关定义修改(常年根据实际情况改变)
+# ID代表实例类别,TrainID代表参与训练的ID(-1代表不参与训练),TypeID表示类别ID
 
 # 目标检测
 OBJECT_DICT = {
@@ -163,12 +163,12 @@ def CA_multi_task_label(input_path: str,
                         labels_obj: str='labels_obj', 
                         labels_semantic: str='labels_semantic') -> None:
     '''
-    CA数据集的多任务联合标注标签处理，输出的标签包括目标检测、语义分割和车道线识别标签
+    CA数据集的多任务联合标注标签处理,输出的标签包括目标检测、语义分割和车道线识别标签
 
     Args:
-        input_path: 整体数据集保存的路径(由于CA的数据集前期表述非常的不一致，这里的读取方式相对而言比较奇葩)
-        output_path: 标签输出的目录，最后包括目标检测、语义分割和车道线识别标签
-        count_output_file: 计数文件保存的绝对路径，该文件用于统计各个标签的个数
+        input_path: 整体数据集保存的路径(由于CA的数据集前期表述非常的不一致,这里的读取方式相对而言比较奇葩)
+        output_path: 标签输出的目录,最后包括目标检测、语义分割和车道线识别标签
+        count_output_file: 计数文件保存的绝对路径,该文件用于统计各个标签的个数
         image_path: output_path路径下保存图像的目录名
         labels_lane: output_path路径下保存车道线标签的目录名
         labels_obj: output_path路径下保存目标检测标签的目录名
@@ -248,7 +248,7 @@ def CA_multi_task_label(input_path: str,
             draw = ImageDraw.Draw(mask)
             lane_dict = {'imageHeight': height, 'imageWidth': width, 'shapes':[]} #! 倪光一数据格式定义
             for label in elements:
-                for label_name in label['attribute'].values(): # 这里的属性值标注存在很多，名称只是其中之一
+                for label_name in label['attribute'].values(): # 这里的属性值标注存在很多,名称只是其中之一
                     # 目标检测
                     if label_name in OBJECT_DICT.keys() and label['markType']=='rect': # 确保标注的是矩形框
                         train_id = OBJECT_DICT[label_name]['train_id'] #^ 获取train id
@@ -267,7 +267,7 @@ def CA_multi_task_label(input_path: str,
                             xy = [(point['x'], point['y']) for point in label['points']]
                             assert len(xy) > 2, "Semantics must have points more than 2"
                             draw.polygon(xy, outline=1, fill=train_id)
-                    # TODO 车道线(当前车道线采用的数据格式是倪光一自定义格式，没有管理trainid的相关情况后续迭代修改)
+                    # TODO 车道线(当前车道线采用的数据格式是倪光一自定义格式,没有管理trainid的相关情况后续迭代修改)
                     elif label_name in LANE_DICT.keys() and label['markType']=='line': # 确保标注的是线
                         lane_count[label_name] += 1
                         lane_dict['shapes'].append({'type':label_name, 'points':label['points']})

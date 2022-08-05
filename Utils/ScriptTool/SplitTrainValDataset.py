@@ -1,4 +1,4 @@
-# 根据标签进行图像数据集分类，分为验证集和训练集
+# 根据标签进行图像数据集分类,分为验证集和训练集
 
 import random
 import shutil
@@ -16,7 +16,7 @@ def object_split_train_val_dataset(imgs_input_path: str,
                                    output_path: str, 
                                    train_sacle: float=0.75) -> None:
     '''
-    根据图像对应标签个数进行采样，根据训练集比例随机分割训练集和验证集
+    根据图像对应标签个数进行采样,根据训练集比例随机分割训练集和验证集
 
     Args:
         imgs_input_path: 输入图片的路径
@@ -37,7 +37,7 @@ def object_split_train_val_dataset(imgs_input_path: str,
 
     logging.info('Getting the files path')
     labels_list = list(labels_input_path.glob('*.txt'))
-    indices = random.sample(range(len(labels_list)), k=len(labels_list))  # 随机采样，不会出现重复的情况
+    indices = random.sample(range(len(labels_list)), k=len(labels_list))  # 随机采样,不会出现重复的情况
     train_indices = indices[:int(train_sacle*len(indices))]
     val_indices = indices[int(train_sacle*len(indices)):]
 

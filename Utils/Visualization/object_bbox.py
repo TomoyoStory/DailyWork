@@ -1,4 +1,4 @@
-# YOLO格式目标检测框绘制，便于查看框的情况，此外，也便于验证标注的情况。
+# YOLO格式目标检测框绘制,便于查看框的情况,此外,也便于验证标注的情况。
 # 该部分代码参考YOLOv5官网源码获取
 
 import cv2
@@ -37,13 +37,13 @@ class BboxAnnotator:
                  font: str='Arial.ttf', 
                  pil: bool=False):
         '''
-        将原始的语义分割图(基本查看全是黑色)转化为由颜色表示的图像，并根据mix_src_path存在情况在原图上绘制
+        将原始的语义分割图(基本查看全是黑色)转化为由颜色表示的图像,并根据mix_src_path存在情况在原图上绘制
 
         Args:
             im: 输入im应该是一个np.array代表的图像
-            line_width: 绘制的线宽，如果没有设置，默认根据图像大小自适应选择
-            font_size: 字体的大小，如果没有设置，默认根据图像大小自适应选择
-            font: 当前为了美观，采用Arial.ttf这个true type font
+            line_width: 绘制的线宽,如果没有设置,默认根据图像大小自适应选择
+            font_size: 字体的大小,如果没有设置,默认根据图像大小自适应选择
+            font: 当前为了美观,采用Arial.ttf这个true type font
             pil: 是否使用pil进行绘制
 
         Returns:
@@ -68,7 +68,7 @@ class BboxAnnotator:
         绘制xyxy格式的标签图在指定的图像上
 
         Args:
-            box: 框，格式为xyxy
+            box: 框,格式为xyxy
             label: 标签的名称
             color: 指定文字背景底色的颜色
             txt_color: 指定文字的颜色
@@ -100,7 +100,7 @@ class BboxAnnotator:
                 cv2.putText(self.im, label, (p1[0], p1[1] - 2 if outside else p1[1] + h + 2), 0, self.lw / 3, txt_color,
                             thickness=tf, lineType=cv2.LINE_AA)
 
-    #^ 该函数仅做了封装，具体接口参数需根据使用情况修改
+    #^ 该函数仅做了封装,具体接口参数需根据使用情况修改
     def rectangle_pil(self, 
                       box: Union[np.array, list], 
                       fill: Union[tuple, None]=None, 
@@ -110,10 +110,10 @@ class BboxAnnotator:
         使用Pillow库进行框的绘制
 
         Args:
-            box: 框，格式为xyxy
-            fill: 填充使用的颜色，类似于(128, 128, 128)，None表示不填充
-            outline: 外轮廓线使用的颜色，类似于(128, 128, 128)，None表示不画外框
-            width: 外轮廓线的宽度，像素单位
+            box: 框,格式为xyxy
+            fill: 填充使用的颜色,类似于(128, 128, 128),None表示不填充
+            outline: 外轮廓线使用的颜色,类似于(128, 128, 128),None表示不画外框
+            width: 外轮廓线的宽度,像素单位
 
         Returns:
             None
@@ -123,14 +123,14 @@ class BboxAnnotator:
         else:
             raise Exception('BboxAnnotator Class do not use "pil=False"')
     
-    #^ 该函数仅做了封装，具体接口参数需根据使用情况修改
+    #^ 该函数仅做了封装,具体接口参数需根据使用情况修改
     def rectangle_cv(self, box: Union[np.array, list], color: tuple=(128, 128, 128)) -> None:
         '''
         使用OpenCv库进行框的绘制
 
         Args:
-            box: 框，格式为xyxy
-            color: 填充使用的颜色，类似于(128, 128, 128)
+            box: 框,格式为xyxy
+            color: 填充使用的颜色,类似于(128, 128, 128)
 
         Returns:
             None
@@ -138,7 +138,7 @@ class BboxAnnotator:
         p1, p2 = (int(box[0]), int(box[1])), (int(box[2]), int(box[3]))
         cv2.rectangle(self.im, p1, p2, color, thickness=self.lw, lineType=cv2.LINE_AA)
 
-    #^ 该函数仅做了封装，具体接口参数需根据使用情况修改
+    #^ 该函数仅做了封装,具体接口参数需根据使用情况修改
     def text_pil(self, xy: Union[np.array, list], text: str, txt_color: tuple=(255, 255, 255)) -> None:
         '''
         使用Pillow库进行文本的绘制
@@ -167,9 +167,9 @@ class BboxAnnotator:
         使用OpenCv库进行加入背景颜色框的文本的绘制
 
         Args:
-            box: 框，xyxy
+            box: 框,xyxy
             text: 要绘制的文本
-            color：绘制文本对应的背景颜色
+            color:绘制文本对应的背景颜色
             txt_color: 文本绘制的颜色
 
         Returns:
@@ -197,12 +197,12 @@ def bbox_color(image_input_path: str,
                label_input_path: str, 
                output_path: str):
     '''
-    根据标签文件和原始图片绘制标注文件，便于整体的查看。
+    根据标签文件和原始图片绘制标注文件,便于整体的查看。
 
     Args:
         image_input_path: 源图像的输入路径
         label_input_path: 标签图像的输入路径
-        color：绘制文本对应的背景颜色
+        color:绘制文本对应的背景颜色
         txt_color: 文本绘制的颜色
 
     Returns:

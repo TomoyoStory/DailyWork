@@ -1,7 +1,7 @@
-## <div align="center">文档说明</div>
+# <div align="center">文档说明</div>
 
 <p>
-这个日常工作脚本仓库的目的在于对日常工作中的基于AI的相关数据、深度学习模块架构、论文笔记参考等综合内容的统计接口开发和维护，从而实现代码的可复用性。该代码当前处于日常开发的过程中，还未进行第一版v1.0的tag发布。潜在问题、需求和BUG请联系本人。
+这个日常工作脚本仓库的目的在于对日常工作中的基于AI的相关数据、深度学习模块架构、论文笔记参考等综合内容的统计接口开发和维护,从而实现代码的可复用性。该代码当前处于日常开发的过程中,还未进行第一版v1.0的tag发布。潜在问题、需求和BUG请联系本人。
 </p>
 
 <details open>
@@ -25,5 +25,5 @@ $ pip install -i https://mirrors.aliyun.com/pypi/simple -r requirements.txt
 </details>
 
 
-## <div align="center"><font color=Crimson>Coming Soon</font></div>
-其他内容当前还未完成，敬请期待。
+# <div align="center"><font color=Crimson>Coming Soon</font></div>
+其他内容当前还未完成,敬请期待。

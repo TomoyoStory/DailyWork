@@ -15,10 +15,10 @@ def bdd_to_yolo(bdd_label_path: str,
                 width: int=1280,
                 height: int=720) -> None:
     '''
-    将BDD数据集格式转换为YOLO格式，注意，这里的格式输出为x_center,y_center,w,h
+    将BDD数据集格式转换为YOLO格式,注意,这里的格式输出为x_center,y_center,w,h
 
     Args:
-        bdd_label_path: bdd标签位置，该目录下应该有bdd100k_labels_images_train.json与bdd100k_labels_images_val.json文件
+        bdd_label_path: bdd标签位置,该目录下应该有bdd100k_labels_images_train.json与bdd100k_labels_images_val.json文件
         yolo_label_path: 输出yolo格式的标签目录
         categorys: 包含的数据类别
         width: 图像的宽度
@@ -65,7 +65,7 @@ def bdd_to_yolo(bdd_label_path: str,
 
 def get_bdd_categorys(bdd_label_path: str, output_path: str) -> None:
     '''
-    获取BDD数据集的整体类别与对应类别数量，并根据str名称进行排序输出具体类别和对应个数
+    获取BDD数据集的整体类别与对应类别数量,并根据str名称进行排序输出具体类别和对应个数
 
     Args:
         bdd_label_path: BDD标签路径(该目录下应该有bdd100k_labels_images_train.json与bdd100k_labels_images_val.json文件)
@@ -112,7 +112,7 @@ def bdd100k_labels_process(labels: dict) -> str:
     处理原始的字典中的相关参数。 #! 该函数根据需求可进行输出的各类变动
 
     Args:
-        labels：labels代表原始json中的labels数组
+        labels:labels代表原始json中的labels数组
 
     Returns:
         labels['category']:原始标签处理后的类别名称
@@ -142,7 +142,7 @@ def get_bdd_categorys_from_file(bdd100k_file_path: str) -> list:
     从名称文件中获取BDD数据集的类别
 
     Args:
-        bdd100k_file_path：保存的.names名称文件路径
+        bdd100k_file_path:保存的.names名称文件路径
 
     Returns:
         categorys(list): 类别list

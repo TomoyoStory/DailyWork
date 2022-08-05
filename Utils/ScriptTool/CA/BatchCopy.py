@@ -1,5 +1,5 @@
 # CA数据集根据文件名字批量复制对应的标签信息
-# from_path必须为复制来自的路径，该路径必须为图像路径，而且图像路径的父目录，必须还有labels_lane, labels_obj, labels_semantic三个目录
+# from_path必须为复制来自的路径,该路径必须为图像路径,而且图像路径的父目录,必须还有labels_lane, labels_obj, labels_semantic三个目录
 
 import shutil
 import logging
@@ -15,11 +15,11 @@ def multi_task_batch_copy(copy_to_path: str,
                           obj_dir_name: str='labels_obj', 
                           semantic_dir_name: str='labels_semantic') -> None:
     '''
-    联合标注多任务数据标签进行文件复制，当前任务包括车道线识别、目标检测和语义识别
+    联合标注多任务数据标签进行文件复制,当前任务包括车道线识别、目标检测和语义识别
 
     Args:
         copy_to_path: 需要复制去的目录
-        from_path: 复制的源目录，该目录下需要包括三个任务对应的标签
+        from_path: 复制的源目录,该目录下需要包括三个任务对应的标签
         lane_dir_name: 车道线标签数据的目录名称
         obj_dir_name: 目标检测标签数据的目录名称
         semantic_dir_name: 语义分割标签数据的目录名称

@@ -1,4 +1,4 @@
-# 语义分割颜色绘制，从而便于查看模型或者相关标签的情况
+# 语义分割颜色绘制,从而便于查看模型或者相关标签的情况
 
 import os
 import logging
@@ -22,7 +22,7 @@ logging.basicConfig(format='%(levelname)s:%(message)s', level=logging.INFO)
 
 def _seg_color_and_save(args:tuple) -> None:
     '''
-    标签颜色的获取和保存，以下的代码根据实际的数据集的情况，适配性的修改。
+    标签颜色的获取和保存,以下的代码根据实际的数据集的情况,适配性的修改。
     '''
     mask_path, output_path, mix_src_path, mix_output_path = args
     mask = np.array(Image.open(mask_path)) # mask
@@ -44,12 +44,12 @@ def semantics_color(input_path: str,
                     mix_src_path: str, 
                     mix_output_path: str) -> None:
     '''
-    将原始的语义分割图(基本查看全是黑色)转化为由颜色表示的图像，并根据mix_src_path存在情况在原图上绘制
+    将原始的语义分割图(基本查看全是黑色)转化为由颜色表示的图像,并根据mix_src_path存在情况在原图上绘制
 
     Args:
-        input_path: 输入的语义分割图的路径，该路径下为纯语义分割图
+        input_path: 输入的语义分割图的路径,该路径下为纯语义分割图
         output_path: 输出的由颜色表示的语义分割图
-        mix_src_path: 如果要进行原图混合表示，输入的原图路径，注意，这里mix_src_path内部的数据名称前缀和input_path必须一致，且当前后缀为可源码修改的jpg格式
+        mix_src_path: 如果要进行原图混合表示,输入的原图路径,注意,这里mix_src_path内部的数据名称前缀和input_path必须一致,且当前后缀为可源码修改的jpg格式
         mix_output_path: 输出的混合原图表示的语义分割图
     
     Returns:

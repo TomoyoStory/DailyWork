@@ -1,4 +1,4 @@
-# 批量修改目录下的名称，以起始索引开始进行名称修改
+# 批量修改目录下的名称,以起始索引开始进行名称修改
 
 import os
 import logging
@@ -9,10 +9,10 @@ logging.basicConfig(format='%(levelname)s:%(message)s', level=logging.INFO)
 
 def batch_rename(path: str, start_pos: int) -> None:
     '''
-    批量文件命名格式修改，该函数完成针对path路径下的文件名称修改为标准0000001.jpg的数据名称
+    批量文件命名格式修改,该函数完成针对path路径下的文件名称修改为标准0000001.jpg的数据名称
 
     Args:
-        path: 输入批量名称修改的路径，该路径下必须包含对应的数据
+        path: 输入批量名称修改的路径,该路径下必须包含对应的数据
         start_pos: 批量命名的起始位置
 
     Returns:

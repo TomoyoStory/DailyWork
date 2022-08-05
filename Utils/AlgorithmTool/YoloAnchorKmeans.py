@@ -17,7 +17,7 @@ def cluster_yolo2anchor(label_path: str,
                         cluster_init: str='k-means++', 
                         n_init: int=5) -> None: 
     '''
-    对整体框进行聚类，获取最佳框的输出
+    对整体框进行聚类,获取最佳框的输出
 
     Args:
         label_path: 保存的yolo格式的txt文件夹的位置

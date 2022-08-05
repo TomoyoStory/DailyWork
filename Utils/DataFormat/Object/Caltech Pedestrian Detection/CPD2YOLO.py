@@ -19,18 +19,18 @@ def _vbb_anno2dict(vbb_file: Union[str, Path],
                    image_input_path: Path, 
                    filter_area: Union[float, int]=600) -> None:
     '''
-    读取目录下单独的.vbb文件，处理获取该.vbb文件对应的的.seq图像序列中的数据,并过滤比较小的面积目标
+    读取目录下单独的.vbb文件,处理获取该.vbb文件对应的的.seq图像序列中的数据,并过滤比较小的面积目标
 
     Args:
-        vbb_file: 输入文件绝对路径，该文件为后缀的.vbb的标签文件
-        images_output_path: 输入图像路径，该路径为通过CPD2Image.py脚本处理后得到的图像数据路径，该路径便于根据处理情况筛选有标签的图像
-        image_input_path: 输出路径，该路径下包括标准的YOLOv5格式的images和labels文件夹
-        filter_area: 过滤标签的面积，从而避免较小的标签
+        vbb_file: 输入文件绝对路径,该文件为后缀的.vbb的标签文件
+        images_output_path: 输入图像路径,该路径为通过CPD2Image.py脚本处理后得到的图像数据路径,该路径便于根据处理情况筛选有标签的图像
+        image_input_path: 输出路径,该路径下包括标准的YOLOv5格式的images和labels文件夹
+        filter_area: 过滤标签的面积,从而避免较小的标签
     
     Returns:
-        annos:得到输出标签所对应的字典，具体字典内容参考源码
+        annos:得到输出标签所对应的字典,具体字典内容参考源码
     '''
-    #! 人太小了根本就看不清，设定就是600个像素单位作为过滤
+    #! 人太小了根本就看不清,设定就是600个像素单位作为过滤
     annos = {}
     vbb = loadmat(vbb_file) # Matlab Mat
     images_output_path.mkdir(exist_ok=True, parents=True)
@@ -44,12 +44,12 @@ def _vbb_anno2dict(vbb_file: Union[str, Path],
             frame_name = images_output_path.joinpath(vbb_file.parent.name + '_' + vbb_file.stem + '_CPD_%07d.jpg'%frame_id)
             frame_dict = { frame_name:{
                                         'label':'person',
-                                        'occlusion':[], # 0为未遮挡，1为遮挡 #^ 当前标签还未使用
+                                        'occlusion':[], # 0为未遮挡,1为遮挡 #^ 当前标签还未使用
                                         'bbox':[],
                                         'src_img_path':image_input_path.joinpath(vbb_file.parent.name).joinpath(vbb_file.stem).joinpath('CPD_%07d.jpg'%frame_id)
                                       } }
             for id, pos, occl in zip(obj['id'][0], obj['pos'][0], obj['occl'][0]):
-                id = int(id[0][0]) - 1  # Maltab索引从1开始，而不是零
+                id = int(id[0][0]) - 1  # Maltab索引从1开始,而不是零
                 if not id in person_index_list:  # 仅使用person标签的类别
                     continue
                 pos = pos[0].tolist()
@@ -70,13 +70,13 @@ def vbb2yolo(input_path: str,
              output_path: str, 
              filter_area: Union[float, int]) -> None:
     '''
-    读取目录下所有的.vbb文件，将根据转换得到的数据信息，进行图像的复制和标签的获取
+    读取目录下所有的.vbb文件,将根据转换得到的数据信息,进行图像的复制和标签的获取
 
     Args:
-        input_path: 输入路径，该路径下包括set00到set10的所有数据集的解压标签数据，下面包含.vbb数据
-        image_input_path: 输入图像路径，该路径为通过CPD2Image.py脚本处理后得到的图像数据路径，该路径便于根据处理情况筛选有标签的图像
-        output_path: 输出路径，该路径下包括标准的YOLOv5格式的images和labels文件夹
-        filter_area: 过滤标签的面积，从而避免较小的标签
+        input_path: 输入路径,该路径下包括set00到set10的所有数据集的解压标签数据,下面包含.vbb数据
+        image_input_path: 输入图像路径,该路径为通过CPD2Image.py脚本处理后得到的图像数据路径,该路径便于根据处理情况筛选有标签的图像
+        output_path: 输出路径,该路径下包括标准的YOLOv5格式的images和labels文件夹
+        filter_area: 过滤标签的面积,从而避免较小的标签
     
     Returns:
         None
@@ -104,7 +104,7 @@ def vbb2yolo(input_path: str,
                     y_center = (bbox[1] + bbox[3]/2) / 480  # 数据集像素高度480
                     width = bbox[2] / 640
                     height = bbox[3] / 480
-                    label_str = label_str + '0 '+ ' '.join(("%.6f" % x_center,"%.6f" % y_center,"%.6f" % width,"%.6f" % height)) + '\n' #! 这里的0仅代表一类，即行人
+                    label_str = label_str + '0 '+ ' '.join(("%.6f" % x_center,"%.6f" % y_center,"%.6f" % width,"%.6f" % height)) + '\n' #! 这里的0仅代表一类,即行人
                 with open(labels_output_path.joinpath(filename.stem + '.txt'),'w', encoding='utf-8') as f:
                     f.write(label_str)
                 shutil.copy(anno['src_img_path'], filename)

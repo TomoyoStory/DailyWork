@@ -1,7 +1,7 @@
 # TTK数据集格式转换为YOLO的xywh格式
-# 这个关于TTK的脚本并没有对具体的标示牌类别进行区分，因为没有意义
-# crop_multiclass选项仅仅用于裁剪中间的所有交通标示牌，并且根据文件名分类
-# single_index则用于单纯的目标检测，索引值可根据自己与其他数据集的兼容性进行设置
+# 这个关于TTK的脚本并没有对具体的标示牌类别进行区分,因为没有意义
+# crop_multiclass选项仅仅用于裁剪中间的所有交通标示牌,并且根据文件名分类
+# single_index则用于单纯的目标检测,索引值可根据自己与其他数据集的兼容性进行设置
 
 import os
 import json
@@ -20,7 +20,7 @@ def tt100k_to_yolo_single(annotations_path: str,
                           width: int=2048, 
                           height: int=2048) -> None:
     '''
-    该函数只提取标示牌，并不对标示牌的具体类别进行分类拆分,注意，这里的格式输出为x_center,y_center,w,h
+    该函数只提取标示牌,并不对标示牌的具体类别进行分类拆分,注意,这里的格式输出为x_center,y_center,w,h
 
     Args:
         annotations_path: annotations.json文件的路径
@@ -71,7 +71,7 @@ def tt100k_to_yolo_single(annotations_path: str,
 
 def tt100k_to_crop_multiclass(annotations_path: str, output_label_path: str) -> None:
     '''
-    该函数提取标示牌，截取标示牌部分像素，并对具体的标示牌进行拆分分类,要求annotations.json目录下保存train和val目录(原始数据集保存格式)
+    该函数提取标示牌,截取标示牌部分像素,并对具体的标示牌进行拆分分类,要求annotations.json目录下保存train和val目录(原始数据集保存格式)
 
     Args:
         annotations_path: annotations.json文件的路径
@@ -147,7 +147,7 @@ def _crop_and_save(info_item: list) -> None:
 
 def _tt100K_categorys_count(categorys: list) -> dict:
     '''
-    统计每一类类别的数量，便于整体的命名
+    统计每一类类别的数量,便于整体的命名
 
     Args:
         categorys: 整个类别
@@ -163,7 +163,7 @@ def _tt100K_categorys_count(categorys: list) -> dict:
 
 def _tt100K_categorys_count_output(names_path: str, categorys_count_dict: dict) -> None:
     '''
-    该函数用于类别计数，便于评估整体标注后相关标签的数量，便于数据分析与样本均衡
+    该函数用于类别计数,便于评估整体标注后相关标签的数量,便于数据分析与样本均衡
 
     Args:
         names_path: 保存文件的路径

@@ -1,4 +1,4 @@
-# Caltech Pedestrian Detection数据集数据转换为可见图片，而不是.seq文件
+# Caltech Pedestrian Detection数据集数据转换为可见图片,而不是.seq文件
 
 import glob
 import logging
@@ -10,10 +10,10 @@ logging.basicConfig(format='%(levelname)s:%(message)s', level=logging.INFO)
 
 def seqs2images(input_path: str, output_path: str) -> None:
     '''
-    读取目录下所有的.seq文件，将其转换为实际的图片
+    读取目录下所有的.seq文件,将其转换为实际的图片
 
     Args:
-        input_path: 输入路径，该路径下包括set00到set10的所有数据集的解压数据，下面包含.set数据
+        input_path: 输入路径,该路径下包括set00到set10的所有数据集的解压数据,下面包含.set数据
         output_path: 输出图片的路径
     
     Returns:
@@ -33,11 +33,11 @@ def seqs2images(input_path: str, output_path: str) -> None:
         parent_dir.mkdir(exist_ok=True, parents=True)
 
         with open(x, 'rb') as f:
-            string = str(f.read().decode('latin-1')) # 这里由于编码格式的问题，必须使用外国的latin-1解码
+            string = str(f.read().decode('latin-1')) # 这里由于编码格式的问题,必须使用外国的latin-1解码
             splitstring = "\xFF\xD8\xFF\xE0\x00\x10\x4A\x46\x49\x46"
             strlist=string.split(splitstring)
         count = -1
-        # 处理文件分段，除了第一个分段，每一个分段都是一张图
+        # 处理文件分段,除了第一个分段,每一个分段都是一张图
         # deal with file segment, every segment is an image except the first one
         for img in strlist:
             file_path = parent_dir.joinpath('CPD_%07d.jpg'%count) #^ 可修改输出的名称补零长度

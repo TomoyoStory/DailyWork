@@ -1,5 +1,5 @@
 # CA目标检测数据集格式转换为YOLO数据集格式脚本
-# 由于标注的样式不一致，选取的数据处理程序根据情况选择
+# 由于标注的样式不一致,选取的数据处理程序根据情况选择
 
 import json
 import logging
@@ -12,8 +12,8 @@ import xml.etree.ElementTree as ET
 logging.basicConfig(format='%(levelname)s:%(message)s', level=logging.INFO)
 
 
-#^ 以下定义根据CA标注需求和识别需求说明书定义，相关定义修改需严格遵照实际的需求和相关定义修改(常年根据实际情况改变)
-# ID代表实例类别，TrainID代表参与训练的ID(-1代表不参与训练)，TypeID表示类别ID
+#^ 以下定义根据CA标注需求和识别需求说明书定义,相关定义修改需严格遵照实际的需求和相关定义修改(常年根据实际情况改变)
+# ID代表实例类别,TrainID代表参与训练的ID(-1代表不参与训练),TypeID表示类别ID
 
 # 车灯检测处理后标签定义
 TRAFFIC_LIGHT_DICT = {
@@ -390,7 +390,7 @@ def CA_BAIDU_traffic_light_to_YOLO(lable_file: str,
                                    output_path: str,
                                    count_output_file: str) -> None:
     '''
-    该函数用于提取CA标注的交通灯的标签信息，注意，这里的格式输出为x_center,y_center,w,h
+    该函数用于提取CA标注的交通灯的标签信息,注意,这里的格式输出为x_center,y_center,w,h
 
     Args:
         lable_file: 标注的文档路径
@@ -422,7 +422,7 @@ def CA_BAIDU_traffic_light_to_YOLO(lable_file: str,
                 height = label_json['result'][0]['size']['height']
                 object_str = ''
                 for label in elements:
-                    for label_name in label['attribute'].values(): # 这里的属性值标注存在很多，名称只是其中之一
+                    for label_name in label['attribute'].values(): # 这里的属性值标注存在很多,名称只是其中之一
                         if label_name in TRAFFIC_LIGHT_ORIGIN.keys() and label['markType']=='rect': # 确保标注的是矩形框
                             train_id = TRAFFIC_LIGHT_ORIGIN[label_name]['train_id'] #! 通过原始定义获取TrainId
                             # 标签名称转换和数量统计 #^ 这里根据实际情况修改
