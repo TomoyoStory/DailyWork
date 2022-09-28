@@ -91,8 +91,14 @@ def bdd_traffic_light_to_yolo(bdd_label_path: str,
 
     for trainval in ['val','train']:  
         json_path = label_path % trainval
+        
         traffic_light_path = os.path.join(yolo_style_output_path, trainval)
         os.makedirs(traffic_light_path, exist_ok=True)
+        traffic_light_label_path = os.path.join(traffic_light_path, 'labels')
+        os.makedirs(traffic_light_label_path, exist_ok=True)
+        traffic_light_image_path = os.path.join(traffic_light_path, 'images')
+        os.makedirs(traffic_light_image_path, exist_ok=True)
+
         logging.info('Reading %s json file' % trainval)
         with open(json_path) as f:
             j = f.read()
@@ -119,16 +125,20 @@ def bdd_traffic_light_to_yolo(bdd_label_path: str,
                     h = max(y1,y2) - min(y1,y2)
                     #^ 默认转变的位数是6位
                     file_str = file_str + str(traffic_ligth_dict[label]) + ' '+ ' '.join(("%.6f" % x_center,"%.6f" % y_center,"%.6f" % w,"%.6f" % h)) + '\n'
-            if has_traffic_light:
-                traffic_light_label_path = os.path.join(traffic_light_path, 'labels')
-                traffic_light_image_path = os.path.join(traffic_light_path, 'images')
+            if has_traffic_light:                
                 traffic_light_yolo_filename = os.path.splitext(datum['name'])[0] + '.txt'
                 with open(os.path.join(traffic_light_label_path, traffic_light_yolo_filename), 'w') as f:
                     f.write(file_str)
-                original_image_name = os.path.join(bdd_image_input_path, datum['name'])
+                original_image_name = os.path.join( os.path.join(bdd_image_input_path, trainval),  datum['name'])
                 output_image_name = os.path.join(traffic_light_image_path, datum['name'])
                 shutil.copy(original_image_name, output_image_name) #^ 复制图片
 
+        logging.info('Writing %s category and id to .names files' % trainval)
+        with open(traffic_light_path + os.sep + 'traffic_light.names','w') as f:
+            for i, category in enumerate(TRAFFIC_LIGHT):
+                f.write(category+' : '+ str(i) + '\n')
+    logging.info('All Traffic Light Tasks are Finished! ~~~///(^v^)\\\~~~ ,233~ Please Check it!')
+        
 
 def get_bdd_categorys(bdd_label_path: str, output_path: str) -> None:
     '''
@@ -226,12 +236,12 @@ def get_bdd_categorys_from_file(bdd100k_file_path: str) -> list:
 if __name__ == "__main__":
     parser = argparse.ArgumentParser(description="Change bdd100k dataset format to yolo dataset format!", epilog="Hello! AI dataset! Hummmm....")
     parser.add_argument('-p', '--label_path', type=str, required=True, help='BDD dataset label path', metavar='bdd_lable_path')
-    # parser.add_argument('-p', '--label_path',  type=str, default=r'./',help='BDD dataset label path', metavar='bdd_lable_path') # 便于在IDE中运行
-    # parser.add_argument('-i', '--input_image_path', type=str, required=True, help='BDD dataset imaeg path', metavar='input_image_path') #^ 根据情况是否选用这个字段
-    # parser.add_argument('-i', '--input_image_path', type=str, default='./', help='BDD dataset imaeg path', metavar='input_image_path')# 便于在IDE中运行
-    parser.add_argument('-ol', '--output_label_path', type=str, default='./yolo_format', help='YOLO format label output path', metavar='output_label_path')
-    parser.add_argument('-oc', '--output_class_path', type=str, default='./', help='YOLO format label class output path', metavar='output_class_path')
-    parser.add_argument('-n', '--names_file', type=str, default='./bdd100k.names', help='BDD100K names file', metavar='bdd100k.names')
+    # parser.add_argument('-p', '--label_path',  type=str, default='./bdd100k/labels',help='BDD dataset label path', metavar='bdd_lable_path') # 便于在IDE中运行
+    parser.add_argument('-i', '--input_image_path', type=str, required=True, help='BDD dataset image path', metavar='input_image_path') #^ 根据情况是否选用这个字段
+    # parser.add_argument('-i', '--input_image_path', type=str, default='./bdd100k/images/100k', help='BDD dataset imaeg path', metavar='input_image_path')# 便于在IDE中运行
+    parser.add_argument('-ol', '--output_label_path', type=str, default='./data/traffic_light', help='YOLO format label output path', metavar='output_label_path')
+    parser.add_argument('-oc', '--output_class_path', type=str, default='./data/traffic_light', help='YOLO format label class output path', metavar='output_class_path')
+    parser.add_argument('-n', '--names_file', type=str, default='./data/traffic_light/bdd100k.names', help='BDD100K names file', metavar='bdd100k.names')
     opt = parser.parse_args()
 
     if not os.path.isdir(opt.label_path):
