@@ -2,11 +2,14 @@
 
 import os
 import json
+import shutil
 import logging
 import argparse
 from tqdm import tqdm
 
 logging.basicConfig(format='%(levelname)s:%(message)s', level=logging.INFO)
+
+TRAFFIC_LIGHT = ['traffic_light_none','traffic_light_green','traffic_light_yellow','traffic_light_red'] # 交通灯命名的格式，可根据实际的需求修改
 
 
 def bdd_to_yolo(bdd_label_path: str, 
@@ -35,7 +38,7 @@ def bdd_to_yolo(bdd_label_path: str,
     for trainval in ['val','train']:  
         json_path = label_path % trainval
         yolo_path = os.path.join(yolo_label_path, trainval)
-        os.makedirs(yolo_path,exist_ok=True)
+        os.makedirs(yolo_path, exist_ok=True)
         logging.info('Reading %s json file'%trainval)
         with open(json_path) as f:
             j = f.read()
@@ -55,12 +58,76 @@ def bdd_to_yolo(bdd_label_path: str,
                     y_center = (y1 + y2)/2
                     w = max(x1,x2) - min(x1,x2)
                     h = max(y1,y2) - min(y1,y2)
-                    # 默认转变的位数是6位
+                    #^ 默认转变的位数是6位
                     file_str = file_str + str(categorys_dict[label]) + ' '+ ' '.join(("%.6f" % x_center,"%.6f" % y_center,"%.6f" % w,"%.6f" % h)) + '\n'
             yolo_filename = os.path.splitext(datum['name'])[0] + '.txt'
             with open(os.path.join(yolo_path, yolo_filename), 'w') as f:
                 f.write(file_str)
     logging.info('All Finish! ~~~///(^v^)\\\~~~ ,233~')
+
+
+def bdd_traffic_light_to_yolo(bdd_label_path: str,
+                              yolo_style_output_path: str,
+                              bdd_image_input_path: str,
+                              width: int=1280,
+                              height: int=720) -> None:
+    '''
+    单独将BDD数据集中的交通灯数据提取出来，这里包含复制所提取的原始图像到指定路径并生成对应的YOLO格式的标签
+
+    Args:
+        bdd_label_path: bdd标签位置,该目录下应该有bdd100k_labels_images_train.json与bdd100k_labels_images_val.json文件
+        yolo_style_output_path: 输出交通灯所对应的yolo格式的标签目录, 包含对应的图像和标签
+        bdd_image_input_path: 原始BDD数据集输入图像路径
+        width: 图像的宽度
+        height: 图像的高度
+    
+    Returns:
+        None
+    '''
+    label_path = bdd_label_path + os.sep + "bdd100k_labels_images_%s.json"
+    traffic_ligth_dict = {}
+    for i, category in enumerate(TRAFFIC_LIGHT):
+        traffic_ligth_dict.update({category:i})
+
+    for trainval in ['val','train']:  
+        json_path = label_path % trainval
+        traffic_light_path = os.path.join(yolo_style_output_path, trainval)
+        os.makedirs(traffic_light_path, exist_ok=True)
+        logging.info('Reading %s json file' % trainval)
+        with open(json_path) as f:
+            j = f.read()
+        data = json.loads(j)
+
+        for datum in tqdm(data, desc='Writing %s yolo format file for traffic light'%trainval, unit='files'):
+            file_str = '' # 保存每个文件所需的字段
+            has_traffic_light = False # 当前帧是否拥有交通灯
+            for label in datum['labels']:
+                box2d = label.get('box2d') # 存在box2d
+                if box2d:
+                    label = bdd100k_labels_process(label) #! 这里会根据需求改变
+                    if label not in TRAFFIC_LIGHT: # 不是交通灯就继续
+                        continue
+                    else:
+                        has_traffic_light = True
+                    x1 = float(round(box2d['x1']) / width)
+                    y1 = float(round(box2d['y1']) / height)
+                    x2 = float(round(box2d['x2']) / width)
+                    y2 = float(round(box2d['y2']) / height)
+                    x_center = (x1 + x2)/2
+                    y_center = (y1 + y2)/2
+                    w = max(x1,x2) - min(x1,x2)
+                    h = max(y1,y2) - min(y1,y2)
+                    #^ 默认转变的位数是6位
+                    file_str = file_str + str(traffic_ligth_dict[label]) + ' '+ ' '.join(("%.6f" % x_center,"%.6f" % y_center,"%.6f" % w,"%.6f" % h)) + '\n'
+            if has_traffic_light:
+                traffic_light_label_path = os.path.join(traffic_light_path, 'labels')
+                traffic_light_image_path = os.path.join(traffic_light_path, 'images')
+                traffic_light_yolo_filename = os.path.splitext(datum['name'])[0] + '.txt'
+                with open(os.path.join(traffic_light_label_path, traffic_light_yolo_filename), 'w') as f:
+                    f.write(file_str)
+                original_image_name = os.path.join(bdd_image_input_path, datum['name'])
+                output_image_name = os.path.join(traffic_light_image_path, datum['name'])
+                shutil.copy(original_image_name, output_image_name) #^ 复制图片
 
 
 def get_bdd_categorys(bdd_label_path: str, output_path: str) -> None:
@@ -119,18 +186,18 @@ def bdd100k_labels_process(labels: dict) -> str:
     
     '''
     if labels['category'] == "traffic light": 
-        #交通灯的颜色
+        #^ 交通灯的颜色
         color = labels['attributes']["trafficLightColor"]
         if color == "none":
-            labels['category'] = 'traffic light none'
+            labels['category'] = TRAFFIC_LIGHT[0]
         if color == "green":
-            labels['category'] = 'traffic light green'
+            labels['category'] = TRAFFIC_LIGHT[1]
         if color == "yellow":
-            labels['category'] = 'traffic light yellow'
+            labels['category'] = TRAFFIC_LIGHT[2]
         if color == "red":
-            labels['category'] = 'traffic light red'
+            labels['category'] = TRAFFIC_LIGHT[3]
     
-    # rider和person现在不做区分
+    #^ rider和person现在不做区分
     if labels['category'] == "rider":
         labels['category'] = "person"
     
@@ -160,6 +227,8 @@ if __name__ == "__main__":
     parser = argparse.ArgumentParser(description="Change bdd100k dataset format to yolo dataset format!", epilog="Hello! AI dataset! Hummmm....")
     parser.add_argument('-p', '--label_path', type=str, required=True, help='BDD dataset label path', metavar='bdd_lable_path')
     # parser.add_argument('-p', '--label_path',  type=str, default=r'./',help='BDD dataset label path', metavar='bdd_lable_path') # 便于在IDE中运行
+    # parser.add_argument('-i', '--input_image_path', type=str, required=True, help='BDD dataset imaeg path', metavar='input_image_path') #^ 根据情况是否选用这个字段
+    # parser.add_argument('-i', '--input_image_path', type=str, default='./', help='BDD dataset imaeg path', metavar='input_image_path')# 便于在IDE中运行
     parser.add_argument('-ol', '--output_label_path', type=str, default='./yolo_format', help='YOLO format label output path', metavar='output_label_path')
     parser.add_argument('-oc', '--output_class_path', type=str, default='./', help='YOLO format label class output path', metavar='output_class_path')
     parser.add_argument('-n', '--names_file', type=str, default='./bdd100k.names', help='BDD100K names file', metavar='bdd100k.names')
@@ -170,9 +239,10 @@ if __name__ == "__main__":
     if not os.path.exists(opt.output_label_path):
         os.mkdir(opt.output_label_path)
     if not os.path.exists(opt.names_file):
-        logging.info('%s path file don not exist:' % opt.names_file)
+        logging.info('%s path file do not exist:' % opt.names_file)
         categorys = get_bdd_categorys(opt.label_path, opt.output_class_path)
     else:
         categorys = get_bdd_categorys_from_file(opt.names_file)
         
     bdd_to_yolo(opt.label_path, opt.output_label_path, categorys)
+    # bdd_traffic_light_to_yolo(opt.label_path, opt.output_label_path, opt.input_image_path) #^ 根据实际情况选择是否需要单独输出交通灯的内容
