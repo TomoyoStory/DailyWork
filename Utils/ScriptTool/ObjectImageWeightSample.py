@@ -8,16 +8,18 @@ from tqdm import tqdm
 from pathlib import Path
 
 
-logging.basicConfig(format='%(levelname)s:%(message)s', level=logging.INFO)
+logging.basicConfig(format="%(levelname)s:%(message)s", level=logging.INFO)
 
 
-def object_image_weight_sample(imgs_input_path: str, 
-                               labels_input_path: str, 
-                               imgs_output_path: str, 
-                               labels_output_path: str, 
-                               sample_scale: float=0.04, 
-                               train_sacle: float=0.75) -> None:
-    '''
+def object_image_weight_sample(
+    imgs_input_path: str,
+    labels_input_path: str,
+    imgs_output_path: str,
+    labels_output_path: str,
+    sample_scale: float = 0.04,
+    train_sacle: float = 0.75,
+) -> None:
+    """
     根据图像对应标签个数进行采样,采样情况根据实际标签中标签个数进行权重采样
 
     Args:
@@ -27,65 +29,147 @@ def object_image_weight_sample(imgs_input_path: str,
         labels_output_path: 输入图片对应的标签的路径
         sample_scale: 采样的比例
         train_sacle: 训练集最后占整个的比例
-    
+
     Returns:
         None
-    '''
+    """
     imgs_input_path = Path(imgs_input_path)
     labels_input_path = Path(labels_input_path)
     imgs_output_path = Path(imgs_output_path)
     labels_output_path = Path(labels_output_path)
-    imgs_output_path.joinpath('train').joinpath('images').mkdir(exist_ok=True, parents=True)
-    imgs_output_path.joinpath('val').joinpath('images').mkdir(exist_ok=True, parents=True)
+    imgs_output_path.joinpath("train").joinpath("images").mkdir(
+        exist_ok=True, parents=True
+    )
+    imgs_output_path.joinpath("val").joinpath("images").mkdir(
+        exist_ok=True, parents=True
+    )
     labels_output_path.mkdir(exist_ok=True, parents=True)
-    labels_output_path.joinpath('train').joinpath('labels').mkdir(exist_ok=True, parents=True)
-    labels_output_path.joinpath('val').joinpath('labels').mkdir(exist_ok=True, parents=True)
+    labels_output_path.joinpath("train").joinpath("labels").mkdir(
+        exist_ok=True, parents=True
+    )
+    labels_output_path.joinpath("val").joinpath("labels").mkdir(
+        exist_ok=True, parents=True
+    )
 
-    logging.info('Getting the files path')
-    labels_list = list(labels_input_path.glob('*.txt'))
-    
+    logging.info("Getting the files path")
+    labels_list = list(labels_input_path.glob("*.txt"))
+
     list_weight = []
-    for x in tqdm(labels_list, desc='Getting the lables number of each file!', unit='files'): # TODO 多进程加速运算速度
-        with open(x, 'r', encoding='utf-8') as f:
+    for x in tqdm(
+        labels_list, desc="Getting the lables number of each file!", unit="files"
+    ):  # TODO 多进程加速运算速度
+        with open(x, "r", encoding="utf-8") as f:
             file_str = f.read()
-            count = len(file_str.split('\n')) - 1
+            count = len(file_str.split("\n")) - 1
             list_weight.append(count)
-    
-    indices = random.choices(range(len(labels_list)), weights=list_weight, k=int(sample_scale*len(labels_list)))  # 根据权重随机采样,会出现重复的情况
-    train_indices = indices[:int(train_sacle*len(indices))]
-    val_indices = indices[int(train_sacle*len(indices)):]
+
+    indices = random.choices(
+        range(len(labels_list)),
+        weights=list_weight,
+        k=int(sample_scale * len(labels_list)),
+    )  # 根据权重随机采样,会出现重复的情况
+    train_indices = indices[: int(train_sacle * len(indices))]
+    val_indices = indices[int(train_sacle * len(indices)) :]
 
     # 训练集复制
-    for x in tqdm(train_indices, desc='Copying Train Dataset', unit='batchs'):
+    for x in tqdm(train_indices, desc="Copying Train Dataset", unit="batchs"):
         src_label = labels_list[x]
-        dst_label = labels_output_path.joinpath('train').joinpath('labels').joinpath(src_label.name)
-        src_image = imgs_input_path.joinpath(src_label.stem + '.jpg') #^ 图像格式后缀根据情况修改
-        dst_image = imgs_output_path.joinpath('train').joinpath('images').joinpath(src_label.stem + '.jpg')
+        dst_label = (
+            labels_output_path.joinpath("train")
+            .joinpath("labels")
+            .joinpath(src_label.name)
+        )
+        src_image = imgs_input_path.joinpath(src_label.stem + ".jpg")  # ^ 图像格式后缀根据情况修改
+        dst_image = (
+            imgs_output_path.joinpath("train")
+            .joinpath("images")
+            .joinpath(src_label.stem + ".jpg")
+        )
         shutil.copy(src_label, dst_label)
         shutil.copy(src_image, dst_image)
-    
+
     # 验证集复制
-    for x in tqdm(val_indices, desc='Copying Val Dataset', unit='batchs'):
+    for x in tqdm(val_indices, desc="Copying Val Dataset", unit="batchs"):
         src_label = labels_list[x]
-        dst_label = labels_output_path.joinpath('val').joinpath('labels').joinpath(src_label.name)
-        src_image = imgs_input_path.joinpath(src_label.stem + '.jpg') #^ 图像格式后缀根据情况修改
-        dst_image = imgs_output_path.joinpath('val').joinpath('images').joinpath(src_label.stem + '.jpg')
+        dst_label = (
+            labels_output_path.joinpath("val")
+            .joinpath("labels")
+            .joinpath(src_label.name)
+        )
+        src_image = imgs_input_path.joinpath(src_label.stem + ".jpg")  # ^ 图像格式后缀根据情况修改
+        dst_image = (
+            imgs_output_path.joinpath("val")
+            .joinpath("images")
+            .joinpath(src_label.stem + ".jpg")
+        )
         shutil.copy(src_label, dst_label)
         shutil.copy(src_image, dst_image)
-    
-    logging.info('All Finish! (*╹▽╹*),HaHa~')
+
+    logging.info("All Finish! (*╹▽╹*),HaHa~")
 
 
-if __name__ == '__main__':
-    parser = argparse.ArgumentParser(description="Sample images to train dataset and val dataset depending on bbox number!", epilog="For the sample balance!")
+if __name__ == "__main__":
+    parser = argparse.ArgumentParser(
+        description="Sample images to train dataset and val dataset depending on bbox number!",
+        epilog="For the sample balance!",
+    )
     # parser.add_argument('-i', '--imgs_input_path', type=str, required=True, help='the path of source image', metavar='src_input_path')
     # parser.add_argument('-l', '--labels_input_path', type=str, default='./', help='the inputpath of labels!', metavar='labels_input_path')
-    parser.add_argument('-i', '--imgs_input_path', type=str, default='./', help='the inputpath of source image', metavar='imgs_input_path') # For IDE
-    parser.add_argument('-l', '--labels_input_path', type=str, default='./', help='the inputpath of labels!', metavar='labels_input_path')
-    parser.add_argument('-io', '--imgs_output_path', type=str, default='./', help='the outpath of source image', metavar='imgs_output_path')
-    parser.add_argument('-lo', '--labels_output_path', type=str, default='./', help='the outpath of labels!', metavar='labels_output_path')
-    parser.add_argument('-s', '--sample_scale', type=float, default=0.04, help='the scale of sample!', metavar='sample_scale')
-    parser.add_argument('-ts', '--train_sacle', type=float, default=0.75, help='the scale of train dataset in all data!', metavar='train_sacle')
+    parser.add_argument(
+        "-i",
+        "--imgs_input_path",
+        type=str,
+        default="./",
+        help="the inputpath of source image",
+        metavar="imgs_input_path",
+    )  # For IDE
+    parser.add_argument(
+        "-l",
+        "--labels_input_path",
+        type=str,
+        default="./",
+        help="the inputpath of labels!",
+        metavar="labels_input_path",
+    )
+    parser.add_argument(
+        "-io",
+        "--imgs_output_path",
+        type=str,
+        default="./",
+        help="the outpath of source image",
+        metavar="imgs_output_path",
+    )
+    parser.add_argument(
+        "-lo",
+        "--labels_output_path",
+        type=str,
+        default="./",
+        help="the outpath of labels!",
+        metavar="labels_output_path",
+    )
+    parser.add_argument(
+        "-s",
+        "--sample_scale",
+        type=float,
+        default=0.04,
+        help="the scale of sample!",
+        metavar="sample_scale",
+    )
+    parser.add_argument(
+        "-ts",
+        "--train_sacle",
+        type=float,
+        default=0.75,
+        help="the scale of train dataset in all data!",
+        metavar="train_sacle",
+    )
     opt = parser.parse_args()
 
-    object_image_weight_sample(opt.imgs_input_path, opt.labels_input_path, opt.imgs_output_path, opt.labels_output_path, opt.sample_scale, opt.train_sacle)
+    object_image_weight_sample(
+        opt.imgs_input_path,
+        opt.labels_input_path,
+        opt.imgs_output_path,
+        opt.labels_output_path,
+        opt.sample_scale,
+        opt.train_sacle,
+    )
