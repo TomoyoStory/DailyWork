@@ -10,3 +10,4 @@ Pillow > 8.0
 sklearn
 opencv-python
 pycocotools
+open3d
