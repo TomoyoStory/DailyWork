@@ -22,6 +22,8 @@ $ pip install -i https://mirrors.aliyun.com/pypi/simple -r requirements.txt
 <details open>
 <summary><b><font color=CadetBlue >各个目录描述</font></b></summary>
 <font color=CornflowerBlue>Utils</font>目录为各种类别工具,详情参考<a href='./Utils/README.md'>说明</a>。
+
+<font color=CornflowerBlue>LinuxShell</font>目录为各种Linux操作系统脚本工具,详情参考<a href='./LinuxShell/README.md'>说明</a>。
 </details>
 
 
