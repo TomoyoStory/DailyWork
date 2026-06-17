@@ -1,0 +1,28 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<profiles xmlns="http://www.eprosima.com/XMLSchemas/fastRTPS_Profiles">
+    <data_writer profile_name="default publisher profile" is_default="true">
+        <qos>
+            <publishMode>
+                <!-- 底层的Fast DDS默认是采用的同步模式,而标准的ROS2中间件设置默认是异步模式 -->
+                <kind>ASYNCHRONOUS</kind>
+            </publishMode>
+            <!-- 默认这里就是使用AUTOMATIC,本地主机默认使用共享内存,非本地主机使用UDP -->
+            <data_sharing>
+                <kind>AUTOMATIC</kind>
+            </data_sharing>
+        </qos>
+        <!-- 其实historyMemoryPolicy的设置和进程间共享内存的传递是解耦的,实际测试下来具体什么设置好像目前看来都没什么影响 -->
+        <historyMemoryPolicy>DYNAMIC</historyMemoryPolicy>
+    </data_writer>
+
+    <data_reader profile_name="default subscriber profile" is_default="true">
+        <qos>
+            <data_sharing>
+                <kind>AUTOMATIC</kind>
+            </data_sharing>
+        </qos>
+        <historyMemoryPolicy>DYNAMIC</historyMemoryPolicy>
+    </data_reader>
+</profiles>
+
+<!-- 实际当前共享内存测试下,这个设置文件除了publishMode其他设置都是没有意义的 -->

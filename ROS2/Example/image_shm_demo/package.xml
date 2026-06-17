@@ -1,0 +1,28 @@
+<?xml version="1.0"?>
+<?xml-model href="http://download.ros.org/schema/package_format3.xsd" schematypens="http://www.w3.org/2001/XMLSchema"?>
+<package format="3">
+    <name>image_shm_demo</name>
+    <version>0.0.1</version>
+    <description>ROS2的基于Fast DDS的Data-sharing的数据传递项目示例程序</description>
+    <maintainer email="tomoyo_story@qq.com">root</maintainer>
+    <license>TODO: License declaration</license>
+
+    <buildtool_depend>ament_cmake</buildtool_depend>
+    <buildtool_depend>ament_cmake_auto</buildtool_depend>
+    <buildtool_depend>rosidl_default_generators</buildtool_depend>
+    <buildtool_export_depend>rosidl_default_runtime</buildtool_export_depend>
+
+    <depend>rclcpp</depend>
+    <depend>launch</depend>
+    <depend>launch_ros</depend>
+    <depend>rmw_fastrtps_cpp</depend>
+    <depend>rclcpp_components</depend>
+    <depend>builtin_interfaces</depend>
+    <depend>rosidl_default_runtime</depend>
+
+    <member_of_group>rosidl_interface_packages</member_of_group>
+
+    <export>
+        <build_type>ament_cmake</build_type>
+    </export>
+</package>
