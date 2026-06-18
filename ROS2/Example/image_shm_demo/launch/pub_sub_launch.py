@@ -25,8 +25,8 @@ def generate_launch_description():
         namespace="",
         package="rclcpp_components",
         executable="component_container_mt",
-        arguments=["--ros-args", "--disable-rosout-logs"],  #! 注意,这里必须添加--ros-args，不然是不起作用的
-        # arguments=["--ros-args", "--disable-rosout-logs","--disable-stdout-logs"],
+        arguments=["--ros-args", "--disable-rosout-logs", "--disable-external-lib-logs"],  #! 注意,这里必须添加--ros-args，不然是不起作用的
+        # arguments=["--ros-args", "--disable-rosout-logs","--disable-stdout-logs", , "--disable-external-lib-logs"],
         composable_node_descriptions=[
             ComposableNode(
                 package="image_shm_demo",
@@ -43,8 +43,8 @@ def generate_launch_description():
         namespace="",
         package="rclcpp_components",
         executable="component_container_mt",
-        arguments=["--ros-args", "--disable-rosout-logs"],  #! 注意,这里必须添加--ros-args，不然是不起作用的
-        # arguments=["--ros-args", "--disable-rosout-logs","--disable-stdout-logs"],
+        arguments=["--ros-args", "--disable-rosout-logs", "--disable-external-lib-logs"],  #! 注意,这里必须添加--ros-args，不然是不起作用的
+        # arguments=["--ros-args", "--disable-rosout-logs","--disable-stdout-logs", "--disable-external-lib-logs"],
         composable_node_descriptions=[
             ComposableNode(
                 package="image_shm_demo",

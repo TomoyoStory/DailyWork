@@ -25,14 +25,14 @@ def generate_launch_description():
         namespace="",
         package="rclcpp_components",
         executable="component_container_mt",
-        arguments=["--ros-args", "--disable-rosout-logs"],  #! 注意,这里必须添加--ros-args，不然是不起作用的
-        # arguments=["--ros-args", "--disable-rosout-logs","--disable-stdout-logs"],
+        arguments=["--ros-args", "--disable-rosout-logs", "--disable-external-lib-logs"],  #! 注意,这里必须添加--ros-args，不然是不起作用的
+        # arguments=["--ros-args", "--disable-rosout-logs","--disable-stdout-logs", "--disable-external-lib-logs"],
         composable_node_descriptions=[
             ComposableNode(
                 package="image_shm_demo",
                 plugin="image_shm_demo::VecSubNode",
                 name="image_sub_node",
-                extra_arguments=[{"use_intra_process_comms": True}], #! 可以激活,节点内的pub使用进程内通讯,sub使用进程间共享内存
+                extra_arguments=[{"use_intra_process_comms": True}],
             )
         ],
         output="screen",
